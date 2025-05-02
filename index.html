@@ -1,526 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indrajeet & Ritika's 7-Day Meal Plan - Magical Edition</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-    <style>
-        /* Harry Potter Theme Styles */
-        body {
-            font-family: 'Merriweather', serif;
-            background-color: #f5eeda; /* Parchment background */
-            color: #3a2d21; /* Dark brown text */
-            background-image: url('data:image/svg+xml,%3Csvg width="52" height="26" viewBox="0 0 52 26" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d2c4a8" fill-opacity="0.2"%3E%3Cpath d="M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z" /%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
-            overflow-x: hidden; /* Prevent horizontal scroll during animation */
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indrajeet & Ritika’s Shared Universe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <style>
+    /* Shared Magic Styles */
+    :root { /* Define colors for consistency */
+        --parchment: #f5eeda;
+        --dark-brown: #3a2d21;
+        --maroon: #740001;
+        --dark-maroon: #ae0001;
+        --gold: #eeba30;
+        --light-brown: #c8bfa8;
+        --light-parchment: rgba(255,255,249,0.9);
+        --hover-parchment: rgba(255,255,249,0.95);
+    }
 
-        /* Curtain Styles */
-        .curtain {
-            position: fixed;
-            top: 0;
-            height: 100vh;
-            width: 50%; /* Each curtain covers half */
-            background: linear-gradient(to bottom, #5d0000, #740001, #5d0000); /* Dark Red Velvet */
-            z-index: 100; /* Ensure curtains are on top */
-            box-shadow: inset -5px 0 15px rgba(0,0,0,0.4), inset 5px 0 15px rgba(0,0,0,0.4);
-            /* Add subtle texture */
-             background-image: linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%, rgba(0,0,0,0.05)),
-                              linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%, rgba(0,0,0,0.05)),
-                              linear-gradient(to bottom, #5d0000, #740001, #5d0000);
-             background-size: 15px 15px, 15px 15px, 100% 100%;
-             overflow: hidden; /* Hide overflowing sparkles */
-        }
-        .curtain-left {
-            left: 0;
-            animation: curtain-open-left 2.5s 0.5s ease-out forwards; /* name duration delay timing fill-mode */
-        }
-        .curtain-right {
-            right: 0; /* Use right for the right curtain */
-            animation: curtain-open-right 2.5s 0.5s ease-out forwards;
-        }
+    body {
+      font-family: 'Merriweather', serif;
+      background-color: var(--parchment);
+      color: var(--dark-brown);
+      /* Subtle Texture */
+      background-image: url('data:image/svg+xml,%3Csvg width="52" height="26" viewBox="0 0 52 26" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d2c4a8" fill-opacity="0.2"%3E%3Cpath d="M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+      overflow-x: hidden; /* Prevent scroll during curtain animation */
+    }
+    /* Curtains */
+    .curtain {
+        position: fixed;
+        top: 0;
+        height: 100vh;
+        width: 50%;
+        background: linear-gradient(to bottom, #5d0000, var(--maroon), #5d0000); /* Dark Red Velvet */
+        z-index: 100; /* Highest layer */
+        box-shadow: inset -5px 0 15px rgba(0,0,0,0.4), inset 5px 0 15px rgba(0,0,0,0.4);
+        overflow:hidden; /* Hide potential overflow */
+    }
+    .curtain-left {
+        left:0;
+        animation: curtain-open-left 2s ease-out 0.5s forwards; /* Added delay */
+    }
+    .curtain-right {
+        right:0;
+        animation: curtain-open-right 2s ease-out 0.5s forwards; /* Added delay */
+    }
+    @keyframes curtain-open-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); pointer-events: none; } /* Move off screen */
+    }
+    @keyframes curtain-open-right {
+         0% { transform: translateX(0); }
+        100% { transform: translateX(100%); pointer-events: none; } /* Move off screen */
+    }
+    /* Header */
+    .hp-header {
+        font-family: 'Cinzel Decorative', cursive;
+        background: linear-gradient(to right, var(--maroon), var(--dark-maroon));
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        box-shadow: 0 5px 15px rgba(58,45,33,0.4);
+        padding: 1.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        position: relative; /* Needed for z-index */
+        z-index: 1; /* Below curtains */
+        border-radius: 5px; /* Optional rounding */
+    }
+    .hp-header h1 {
+        font-size: 2.5rem; /* Adjust as needed */
+        line-height: 1.1;
+    }
+    .hp-header p {
+        font-family: 'Merriweather', serif; /* Use body font for subtitle */
+        font-size: 1.125rem; /* 18px */
+        margin-top: 0.5rem;
+    }
+    /* Portal Cards */
+    .portal-card {
+        background-color: var(--light-parchment);
+        border: 1px solid var(--light-brown);
+        border-radius: 0.5rem; /* 8px */
+        box-shadow: 0 4px 8px rgba(58,45,33,0.2);
+        transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden; /* Keep sparkles contained */
+        display: flex; /* Use flexbox for layout */
+        flex-direction: column; /* Stack title and text */
+        justify-content: center; /* Center content vertically */
+        align-items: center; /* Center content horizontally */
+        text-align: center;
+        text-decoration: none; /* Remove underline from links */
+        color: var(--dark-brown);
+        min-height: 180px; /* Ensure minimum height */
+    }
+    .portal-card:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 16px rgba(58,45,33,0.3);
+        background-color: var(--hover-parchment);
+    }
+    .hp-title { /* Title within the card */
+        font-family: 'Cinzel Decorative', cursive;
+        color: var(--maroon);
+        margin-bottom: 0.75rem; /* Increased spacing */
+        font-size: 1.5rem; /* Adjusted size */
+        line-height: 1.2;
+        display: flex; /* Align icon and text */
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem; /* Space between icon and text */
+    }
+    .portal-card p { /* Description text */
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-top: 0.5rem; /* Space above description */
+    }
+     /* Icon container */
+     .icon-container {
+         width: 40px; /* Size for SVG */
+         height: 40px;
+         margin-bottom: 0.5rem; /* Space below icon */
+         fill: var(--maroon); /* SVG color */
+         transition: transform 0.3s ease;
+     }
+     .portal-card:hover .icon-container {
+         transform: scale(1.1);
+     }
 
-        /* Curtain Opening Animations */
-        @keyframes curtain-open-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); pointer-events: none; } /* Move left and disable interaction */
-        }
-        @keyframes curtain-open-right {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100%); pointer-events: none; } /* Move right and disable interaction */
-        }
+    /* Sparkle animation */
+    .portal-card::after, .portal-card::before {
+        content:'✨';
+        position:absolute;
+        font-size:1.2rem;
+        color: var(--gold); /* Use gold for sparkles */
+        opacity:0;
+        pointer-events:none;
+        z-index: 5; /* Ensure sparkles are above card content */
+    }
+    .portal-card::after { top:-10px; left:50%; }
+    .portal-card::before { top:-10px; left:40%; transform: rotate(20deg); }
+    .portal-card:hover::after { opacity:1; animation:sparkle1 1s ease-out forwards; }
+    .portal-card:hover::before { opacity:1; animation:sparkle2 1.2s ease-out 0.1s forwards; }
+    @keyframes sparkle1 { 0%{transform:translate(-50%,0) scale(0.5);}50%{transform:translate(-50%,10px) scale(1.2);opacity:1;}100%{transform:translate(-50%,-10px) scale(0.5);opacity:0;} }
+    @keyframes sparkle2 { 0%{transform:translate(-50%,0) rotate(20deg) scale(0.5);}50%{transform:translate(-50%,15px) rotate(20deg) scale(1.1);opacity:0.8;}100%{transform:translate(-50%,-5px) rotate(20deg) scale(0.5);opacity:0;} }
 
-        /* Glitter on Curtains - Using Span elements */
-        .curtain-sparkle {
-            content: '✨';
-            position: absolute;
-            color: #eeba30; /* Gold color */
-            font-size: var(--size, 1rem); /* Use CSS variable for size */
-            opacity: 0;
-            animation: curtain-glitter 2s ease-out infinite; /* Loop during opening */
-            animation-delay: calc(var(--delay) * 1s); /* Use CSS variable for delay */
-            top: calc(var(--y) * 1%);
-            left: calc(var(--x) * 1%);
-            pointer-events: none;
-        }
+    /* Fade-in main content after curtain */
+    .main-content {
+        opacity:0;
+        animation:fadeIn 1s ease-out forwards;
+        animation-delay:2.5s; /* Delay slightly longer than curtain animation */
+    }
+    @keyframes fadeIn { to { opacity:1; } }
 
-        /* Stop glitter after curtains open */
-        .curtain.curtain-opened .curtain-sparkle {
-             animation: none; /* Stop animation */
-             opacity: 0; /* Hide sparkles */
-        }
-
-        @keyframes curtain-glitter {
-            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-            50% { opacity: 0.8; transform: scale(1.2) rotate(180deg); }
-        }
-
-        /* Main Content Container Animation */
-        .main-content {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: reveal-content 1s ease-out forwards;
-            animation-delay: 2.5s; /* Start after curtains are mostly open */
-        }
-
-        @keyframes reveal-content {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-
-        /* --- Existing Styles Below --- */
-
-        .hp-header {
-            font-family: 'Cinzel Decorative', cursive;
-            background: linear-gradient(to right, #740001, #ae0001);
-            color: #eeba30;
-            border: 2px solid #eeba30;
-            box-shadow: 0 5px 15px rgba(58, 45, 33, 0.4);
-            animation: float-effect 4s ease-in-out infinite;
-            position: relative; /* Ensure header stays in flow */
-            z-index: 10; /* Below curtains */
-        }
-
-        @keyframes float-effect {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        .hp-title {
-             font-family: 'Cinzel Decorative', cursive;
-             color: #740001;
-             transition: text-shadow 0.3s ease;
-             text-shadow: 1px 1px 2px rgba(58, 45, 33, 0.2);
-        }
-
-        .meal-card:hover .hp-title {
-             text-shadow: 0 0 8px rgba(238, 186, 48, 0.7), 1px 1px 2px rgba(58, 45, 33, 0.3);
-        }
-
-        .meal-card {
-            background-color: rgba(255, 255, 249, 0.85);
-            border: 1px solid #c8bfa8;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 8px rgba(58, 45, 33, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.4s ease, background-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            min-height: 250px;
-            z-index: 1; /* Ensure cards are behind curtains initially */
-        }
-
-        .meal-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(58, 45, 33, 0.3);
-            background-color: rgba(255, 255, 249, 0.95);
-        }
-
-        /* Card Sparkle Animations on Hover */
-        .meal-card::after, .meal-card::before {
-            content: '✨';
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .meal-card::after {
-             top: -20px;
-             left: 50%;
-        }
-        .meal-card:hover::after {
-            opacity: 1;
-            animation: sparkle-move-1 1s ease-out forwards;
-        }
-
-        .meal-card::before {
-            top: -15px;
-            left: 40%;
-            font-size: 1.2rem;
-            transform: rotate(20deg);
-        }
-         .meal-card:hover::before {
-            opacity: 1;
-            animation: sparkle-move-2 1.2s ease-out 0.1s forwards;
-        }
-
-        @keyframes sparkle-move-1 {
-            0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; top: -20px;}
-            50% { transform: translate(-50%, 10px) scale(1.2); opacity: 1; }
-            100% { transform: translate(-50%, -10px) scale(0.5); opacity: 0; top: 30px; }
-        }
-         @keyframes sparkle-move-2 {
-            0% { transform: translate(-50%, 0) rotate(20deg) scale(0.5); opacity: 0; top: -15px;}
-            50% { transform: translate(-50%, 15px) rotate(20deg) scale(1.1); opacity: 0.8; }
-            100% { transform: translate(-50%, -5px) rotate(20deg) scale(0.5); opacity: 0; top: 40px; }
-        }
-
-        .summary-section, .notes-section {
-            background-color: rgba(225, 234, 249, 0.7);
-            border: 1px solid #740001;
-            color: #3a2d21;
-            border-radius: 0.5rem;
-            box-shadow: 0 3px 6px rgba(58, 45, 33, 0.15);
-            opacity: 0; /* Start hidden for fade-in */
-            animation: fade-in-effect 1s ease-out forwards;
-            animation-delay: 3s; /* Delay fade-in until after curtains */
-            position: relative; /* Ensure these stay in flow */
-            z-index: 5; /* Below curtains */
-            transition: transform 0.2s ease-out; /* Add transition for hover */
-        }
-        .notes-section {
-             border-left: 4px solid #ae0001;
-             animation-delay: 3.2s; /* Stagger the fade-in */
-        }
-        /* Add hover effect for summary/notes */
-        .summary-section:hover, .notes-section:hover {
-            transform: scale(1.02);
-        }
-
-        @keyframes fade-in-effect {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .text-primary-text { color: #3a2d21; }
-        .text-secondary-text { color: #6f5f4f; }
-        .text-accent { color: #740001; }
-        .text-highlight { color: #ae0001; }
-        .text-gold { color: #eeba30; }
-
-        .border-special-1 { border-color: #0e6b0e; }
-        .border-special-2 { border-color: #eeba30; }
-
-        .music-button {
-            font-family: 'Cinzel Decorative', cursive;
-            background-color: #eeba30;
-            color: #740001;
-            border: 2px solid #740001;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 4px rgba(58, 45, 33, 0.3);
-            margin-top: 1rem;
-            position: relative; /* Keep in flow */
-            z-index: 10; /* Below curtains */
-        }
-        .music-button:hover {
-            background-color: #740001;
-            color: #eeba30;
-            box-shadow: 0 4px 8px rgba(58, 45, 33, 0.5);
-        }
-        .music-button:active {
-             transform: translateY(1px);
-             box-shadow: 0 2px 4px rgba(58, 45, 33, 0.3);
-        }
-
-    </style>
+    /* Buttons */
+    .music-button {
+        font-family: 'Cinzel Decorative', cursive;
+        background: var(--gold);
+        color: var(--maroon);
+        border:2px solid var(--maroon);
+        padding:.5rem 1rem;
+        border-radius:5px;
+        cursor:pointer;
+        box-shadow:0 2px 4px rgba(58,45,33,0.3);
+        transition: background-color .3s, color .3s, box-shadow .3s;
+    }
+    .music-button:hover {
+        background: var(--maroon);
+        color: var(--gold);
+        box-shadow: 0 4px 8px rgba(58,45,33,0.5);
+    }
+     .music-button:active {
+         transform: translateY(1px);
+         box-shadow: 0 2px 4px rgba(58, 45, 33, 0.3);
+     }
+  </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="bg-gray-100"> <div id="curtainLeft" class="curtain curtain-left"></div>
+  <div id="curtainRight" class="curtain curtain-right"></div>
 
-    <div id="curtainLeft" class="curtain curtain-left">
-        <span class="curtain-sparkle" style="--delay: 0.2; --x: 30; --y: 15; --size: 0.9rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 0.5; --x: 70; --y: 40; --size: 1.1rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 0.8; --x: 20; --y: 65; --size: 0.7rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 1.2; --x: 85; --y: 80; --size: 1.0rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 1.5; --x: 45; --y: 90; --size: 0.8rem;"></span>
-    </div>
-    <div id="curtainRight" class="curtain curtain-right">
-        <span class="curtain-sparkle" style="--delay: 0.3; --x: 65; --y: 25; --size: 1.0rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 0.7; --x: 25; --y: 55; --size: 0.8rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 1.0; --x: 75; --y: 75; --size: 1.1rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 1.4; --x: 15; --y: 10; --size: 0.9rem;"></span>
-        <span class="curtain-sparkle" style="--delay: 1.7; --x: 55; --y: 95; --size: 0.7rem;"></span>
-    </div>
+  <div class="main-content max-w-6xl mx-auto p-4">
+    <header class="hp-header">
+      <h1>Indrajeet & Ritika’s Shared Universe</h1>
+      <p>A space for spellcraft, planning, journaling & life magic</p>
+      <button id="musicToggle" class="music-button mt-4">Play Magical Music 🎵</button>
+    </header>
 
-    <div class="main-content max-w-7xl mx-auto">
-        <header class="hp-header mb-4 p-6 rounded-lg shadow-md text-center">
-            <h1 class="text-3xl md:text-4xl font-bold">Indrajeet & Ritika's Magical Meal Plan</h1>
-            <p class="text-lg mt-2 font-['Merriweather']">Balanced | Budget-Friendly | House-Elf Friendly | Allergy Safe</p>
-        </header>
-
-        <div class="text-center mb-8">
-             <button id="musicToggle" class="music-button">Play Magical Music 🎵</button>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a class="portal-card" href="meal-plan.html"> <div class="icon-container">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 4h-3.5a.5.5 0 0 0-.5.5V5H9V4.5a.5.5 0 0 0-.5-.5H5a3 3 0 0 0-3 3v9a5 5 0 0 0 10 0v-1h2v1a5 5 0 0 0 10 0v-9a3 3 0 0 0-3-3zM5 6h3v1.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V6h3a1 1 0 0 1 1 1v8.17a3.001 3.001 0 0 1-5.998.176l-.002-.176V15h-2v.17c0 1.41-1.03 2.61-2.41 2.93L8 18.17a3 3 0 0 1-3-2.83V7a1 1 0 0 1 1-1zm7 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
         </div>
+        <h2 class="hp-title">Meal Planner</h2>
+        <p>Plan our weekly magic meals</p>
+      </a>
+      <a class="portal-card" href="#owl-mail">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+         </div>
+        <h2 class="hp-title">Owl Mail</h2>
+        <p>Write or check love notes</p>
+      </a>
+      <a class="portal-card" href="#pensieve">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+         </div>
+        <h2 class="hp-title">The Pensieve</h2>
+        <p>Journals, reflections & memories</p>
+      </a>
+      <a class="portal-card" href="#gift-vault">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3s-3 1.34-3 3c0 .35.07.69.18 1H6c-1.11 0-1.99.89-1.99 2L4 20c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 8h12v12H6V8z"/></svg>
+         </div>
+        <h2 class="hp-title">Gift Vault</h2>
+        <p>Track gifts & wishlists</p>
+      </a>
+      <a class="portal-card" href="#remembrall">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+         </div>
+        <h2 class="hp-title">Remembrall</h2>
+        <p>Our dates & events</p>
+      </a>
+      <a class="portal-card" href="#article-chamber">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+         </div>
+        <h2 class="hp-title">Article Chamber</h2>
+        <p>Write or read drafts</p>
+      </a>
+      <a class="portal-card" href="#room-of-requirement">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 0 1 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.06-2.15 3.98l.01.12z"/></svg>
+         </div>
+        <h2 class="hp-title">Room of Requirement</h2>
+        <p>Tasks & future ideas</p>
+      </a>
+       </div>
+  </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <script>
+    // Curtain removal logic (using pointer-events is smoother than display:none)
+    const curtainLeft = document.getElementById('curtainLeft');
+    const curtainRight = document.getElementById('curtainRight');
+    // Add event listeners to add a class when animation ends
+    curtainLeft.addEventListener('animationend', () => curtainLeft.classList.add('curtain-opened'));
+    curtainRight.addEventListener('animationend', () => curtainRight.classList.add('curtain-opened'));
 
-            <div class="meal-card p-5">
-                <h2 class="hp-title text-2xl font-bold mb-3">⚡ Monday</h2>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Lunch:</h3>
-                    <p class="text-primary-text">Moong dal (150g), Rice (150g), Bhindi fry (100g)</p>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Dinner:</h3>
-                    <p class="text-primary-text">Aloo Paratha (2, ~250g), Mint chutney (50g), Tomato-cucumber salad (100g)</p>
-                </div>
-                <div class="border-t border-[#c8bfa8] pt-3 mt-3">
-                    <p class="text-sm text-secondary-text">Calories: ~1620 | Protein: 48g</p>
-                    <p class="text-sm text-secondary-text">Carbs: 200g | Fats: 48g</p>
-                    <p class="text-sm font-bold text-accent mt-1">Est. Cost: ₹150</p>
-                </div>
-            </div>
+    // --- Tone.js Music Logic ---
+    let musicPlaying = false;
+    const musicButton = document.getElementById('musicToggle');
+    let backgroundSynth, backgroundSeq, openingChime; // Instruments
 
-            <div class="meal-card p-5">
-                <h2 class="hp-title text-2xl font-bold mb-3">⚡ Tuesday</h2>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Lunch:</h3>
-                    <p class="text-primary-text">Chana Masala (200g), Rice (150g), Karela sabzi (100g)</p>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Dinner:</h3>
-                    <p class="text-primary-text">Dragon Egg* Scramble (100g), Roti (2, 100g), Mint chutney, Tomato-cucumber salad (100g)</p>
-                    <p class="text-xs text-secondary-text">*Okay, regular egg bhurji!</p>
-                </div>
-                 <div class="border-t border-[#c8bfa8] pt-3 mt-3">
-                    <p class="text-sm text-secondary-text">Calories: ~1700 | Protein: 62g</p>
-                    <p class="text-sm text-secondary-text">Carbs: 210g | Fats: 52g</p>
-                    <p class="text-sm font-bold text-accent mt-1">Est. Cost: ₹180</p>
-                </div>
-            </div>
+    // Function to initialize background music
+    function setupBackgroundMusic() {
+        if (backgroundSynth) return; // Already initialized
+        backgroundSynth = new Tone.FMSynth({
+            harmonicity: 3.1, modulationIndex: 10, detune: 0,
+            oscillator: { type: "sine" },
+            envelope: { attack: 0.01, decay: 0.1, sustain: 0.5, release: 1 },
+            modulation: { type: "square" },
+            modulationEnvelope: { attack: 0.5, decay: 0, sustain: 1, release: 0.5 }
+        }).toDestination();
+        const reverb = new Tone.Reverb(2).toDestination();
+        backgroundSynth.connect(reverb);
+        const melody = [ null, 'B4', null, 'E5', 'G5', null, 'F#5', null, 'E5', null, 'B4', null, 'D5', null, 'C#5', null, null, null, null, null, null, null, null, null ];
+        backgroundSeq = new Tone.Sequence((time, note) => { if (note) { backgroundSynth.triggerAttackRelease(note, "8n", time); } }, melody, "4n");
+        Tone.Transport.bpm.value = 100;
+        backgroundSeq.loop = true;
+    }
 
-            <div class="meal-card p-5">
-                <h2 class="hp-title text-2xl font-bold mb-3">⚡ Wednesday</h2>
-                 <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Lunch:</h3>
-                    <p class="text-primary-text">Dahi Baingan (150g), Rice (150g)</p>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Dinner:</h3>
-                    <p class="text-primary-text">Gillyweed Fish Curry (150g), Roti (2, 100g), Tomato-cucumber salad (100g)</p>
-                 </div>
-                 <div class="border-t border-[#c8bfa8] pt-3 mt-3">
-                    <p class="text-sm text-secondary-text">Calories: ~1730 | Protein: 70g</p>
-                    <p class="text-sm text-secondary-text">Carbs: 200g | Fats: 49g</p>
-                    <p class="text-sm font-bold text-accent mt-1">Est. Cost: ₹190</p>
-                </div>
-            </div>
+    // Function to play opening chime
+    function playOpeningChime() {
+         if (openingChime) return; // Play only once
+         openingChime = new Tone.PluckSynth({ attackNoise: 1, dampening: 4000, resonance: 0.8 }).toDestination();
+         const chimeReverb = new Tone.Reverb(1.5).toDestination();
+         openingChime.connect(chimeReverb);
+         const now = Tone.now();
+         // Play chime slightly after curtain animation starts
+         openingChime.triggerAttackRelease("C5", "8n", now + 0.6);
+         openingChime.triggerAttackRelease("G5", "8n", now + 0.9);
+         openingChime.triggerAttackRelease("E6", "4n", now + 1.3);
+    }
 
-            <div class="meal-card p-5 border-2 border-special-1">
-                <h2 class="hp-title text-2xl font-bold mb-3">⚡ Thursday (Herbology Special)</h2>
-                 <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Lunch:</h3>
-                    <p class="text-primary-text">Arhar dal (150g), Rice (150g), Pumpkin Pasties* (100g)</p>
-                     <p class="text-xs text-secondary-text">*Pumpkin Sabzi, close enough!</p>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Dinner:</h3>
-                    <p class="text-primary-text">Dal Bhari Puri (2, 150g), Bottle Gourd Raita (100g)</p>
-                </div>
-                 <div class="border-t border-[#c8bfa8] pt-3 mt-3">
-                    <p class="text-sm text-secondary-text">Calories: ~1550 | Protein: 52g</p>
-                    <p class="text-sm text-secondary-text">Carbs: 195g | Fats: 38g</p>
-                    <p class="text-sm font-bold text-accent mt-1">Est. Cost: ₹160</p>
-                </div>
-            </div>
+     // Flag to ensure chime plays only once after interaction
+    let hasInteracted = false;
 
-            <div class="meal-card p-5">
-                <h2 class="hp-title text-2xl font-bold mb-3">⚡ Friday</h2>
-                 <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Lunch:</h3>
-                    <p class="text-primary-text">Lauki dal (200g), Jeera rice (150g)</p>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Dinner:</h3>
-                    <p class="text-primary-text">Blast-Ended Skrewt* Curry (150g), Phulka (2, 100g), Bhindi fry (100g)</p>
-                    <p class="text-xs text-secondary-text">*Just prawns curry, Hagrid isn't cooking!</p>
-                </div>
-                 <div class="border-t border-[#c8bfa8] pt-3 mt-3">
-                    <p class="text-sm text-secondary-text">Calories: ~1750 | Protein: 68g</p>
-                    <p class="text-sm text-secondary-text">Carbs: 220g | Fats: 52g</p>
-                    <p class="text-sm font-bold text-accent mt-1">Est. Cost: ₹220</p>
-                </div>
-            </div>
-
-            <div class="meal-card p-5 border-2 border-special-2">
-                <h2 class="hp-title text-2xl font-bold mb-3">⚡ Saturday (Honeydukes Haul!)</h2>
-                 <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Lunch:</h3>
-                    <p class="text-primary-text">Order in / Dine out (Butterbeer? Cauldron Cakes? Or just rolls, momo, etc.) — keep it under ₹1000</p>
-                 </div>
-                 <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Dinner:</h3>
-                    <p class="text-primary-text">Optional — Fruit Bowl (200g) or Light Khichdi (200g)</p>
-                </div>
-                 <div class="border-t border-[#c8bfa8] pt-3 mt-3">
-                    <p class="text-sm text-secondary-text">Calories: ~1600 | Protein: 50g</p>
-                    <p class="text-sm text-secondary-text">Carbs: 180g | Fats: 45g</p>
-                    <p class="text-sm font-bold text-accent mt-1">Est. Cost: ₹500</p>
-                 </div>
-            </div>
-
-            <div class="meal-card p-5">
-                <h2 class="hp-title text-2xl font-bold mb-3">⚡ Sunday Feast</h2>
-                 <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Lunch:</h3>
-                    <p class="text-primary-text">Cholla (200g), Rice (150g), Parwal fry (100g)</p>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold text-primary-text">Dinner:</h3>
-                    <p class="text-primary-text">Chicken Curry (150g), Paratha (1, 100g), Steamed Pumpkin (100g)</p>
-                </div>
-                 <div class="border-t border-[#c8bfa8] pt-3 mt-3">
-                    <p class="text-sm text-secondary-text">Calories: ~1820 | Protein: 74g</p>
-                    <p class="text-sm text-secondary-text">Carbs: 225g | Fats: 55g</p>
-                    <p class="text-sm font-bold text-accent mt-1">Est. Cost: ₹210</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-             <div class="summary-section shadow p-5">
-                <h2 class="hp-title text-xl font-bold mb-3 text-highlight">Weekly Spellbook Summary</h2>
-                <p class="text-lg font-medium text-primary-text">Total Estimated Galleons*: <span class="font-bold text-accent">~₹1,610</span></p>
-                 <p class="text-xs text-secondary-text">*Okay, Rupees!</p>
-                <p class="mt-2 text-primary-text">Meal Variety: Mandrakes, Dragon Eggs, Gillyweed Fish, Skrewts, Phoenix Chicken... and Rice!</p>
-                <p class="mt-1 text-primary-text">Consistency: Balanced meals, fit for wizards and muggles alike.</p>
-            </div>
-
-            <div class="notes-section shadow p-5">
-                 <h2 class="hp-title text-xl font-bold mb-3 text-highlight">📜 Notes & Tips from the Headmaster</h2>
-                 <ul class="list-disc list-inside text-primary-text space-y-1">
-                    <li>Prep potions (gravies) ahead of time.</li>
-                    <li>Assign simple chopping charms to your house-elf (maid).</li>
-                    <li>Add a squeeze of lemon jinx or black salt hex to salads!</li>
-                 </ul>
-                 <p class="mt-4 font-bold text-accent">Mischief Managed... Deliciously!</p>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // Tone.js Music Setup
-        let musicPlaying = false;
-        const musicButton = document.getElementById('musicToggle');
-        let backgroundSynth, backgroundSeq, openingChime; // Declare instruments globally
-
-        // Function to initialize background music elements
-        function setupBackgroundMusic() {
-            // Create a synth for background music
-            backgroundSynth = new Tone.FMSynth({
-                harmonicity: 3.1, modulationIndex: 10, detune: 0,
-                oscillator: { type: "sine" },
-                envelope: { attack: 0.01, decay: 0.1, sustain: 0.5, release: 1 },
-                modulation: { type: "square" },
-                modulationEnvelope: { attack: 0.5, decay: 0, sustain: 1, release: 0.5 }
-            }).toDestination();
-
-            const reverb = new Tone.Reverb(2).toDestination();
-            backgroundSynth.connect(reverb);
-
-            const melody = [
-                null, 'B4', null, 'E5', 'G5', null, 'F#5', null,
-                'E5', null, 'B4', null, 'D5', null, 'C#5', null,
-                null, null, null, null, null, null, null, null // Longer pause
-            ];
-
-            backgroundSeq = new Tone.Sequence((time, note) => {
-                if (note) {
-                    backgroundSynth.triggerAttackRelease(note, "8n", time);
-                }
-            }, melody, "4n");
-
-            Tone.Transport.bpm.value = 100;
-            backgroundSeq.loop = true;
+    // Music Button Event Listener
+    musicButton.addEventListener('click', async () => {
+        if (!hasInteracted) {
+            try {
+                await Tone.start(); // Start audio context on first interaction
+                console.log("Audio Context Started");
+                playOpeningChime(); // Play chime on first interaction
+                hasInteracted = true;
+            } catch (e) {
+                 console.error("Error starting Tone.js:", e);
+                 // Handle cases where audio context fails to start
+                 alert("Could not initialize audio. Please try again.");
+                 return;
+            }
         }
 
-        // Function to setup and play opening chime
-        function playOpeningChime() {
-            // Use a different synth for the chime
-             openingChime = new Tone.PluckSynth({
-                attackNoise: 1,
-                dampening: 4000,
-                resonance: 0.8
-            }).toDestination();
-             const chimeReverb = new Tone.Reverb(1.5).toDestination(); // Shorter reverb
-             openingChime.connect(chimeReverb);
-
-            // Play a short sequence of notes slightly after curtain animation starts
-            const now = Tone.now();
-            openingChime.triggerAttackRelease("C5", "8n", now + 0.6); // Delay matches curtain delay + a bit
-            openingChime.triggerAttackRelease("G5", "8n", now + 0.9);
-            openingChime.triggerAttackRelease("E6", "4n", now + 1.3);
+        if (!backgroundSynth) {
+            setupBackgroundMusic(); // Setup music if not already done
         }
 
-        // Event listener for the music toggle button
-        musicButton.addEventListener('click', async () => {
-            await Tone.start(); // Start audio context if not already started
+        if (!musicPlaying) {
+            Tone.Transport.start();
+            backgroundSeq.start(0);
+            musicButton.textContent = 'Stop Magical Music 🤫';
+            musicPlaying = true;
+        } else {
+            backgroundSeq.stop();
+            Tone.Transport.stop();
+            musicButton.textContent = 'Play Magical Music 🎵';
+            musicPlaying = false;
+        }
+    });
 
-            if (!backgroundSynth) { // Setup background music only once
-                setupBackgroundMusic();
-            }
-
-            if (!musicPlaying) {
-                Tone.Transport.start();
-                backgroundSeq.start(0);
-                musicButton.textContent = 'Stop Music 🤫';
-                musicPlaying = true;
-            } else {
-                backgroundSeq.stop();
-                Tone.Transport.stop(); // Stop transport completely
-                musicButton.textContent = 'Play Magical Music 🎵';
-                musicPlaying = false;
-            }
-        });
-
-         // Curtain animation end listeners
-         const curtainLeft = document.getElementById('curtainLeft');
-         const curtainRight = document.getElementById('curtainRight');
-
-         curtainLeft.addEventListener('animationend', () => {
-            curtainLeft.classList.add('curtain-opened');
-         });
-         curtainRight.addEventListener('animationend', () => {
-            curtainRight.classList.add('curtain-opened');
-         });
-
-         // Play opening chime on load (needs user interaction first for audio context)
-         window.addEventListener('load', async () => {
-             // We need to ensure Tone.start() has been called.
-             // A common pattern is a 'click anywhere to start' overlay,
-             // but here we rely on the music button being clicked eventually.
-             // Let's try playing it with a slight delay, hoping context is ready.
-             try {
-                 await Tone.start(); // Attempt to start context silently
+    // Attempt to play chime on load if context is already active (e.g., navigating back)
+    // This might not always work due to browser restrictions
+    window.addEventListener('load', () => {
+        if (Tone.context.state === 'running') {
+             // Check if interaction already happened in this session
+             if (!hasInteracted) {
                  playOpeningChime();
-             } catch (e) {
-                 console.log("Tone.start() needs user interaction first. Chime will play after music button click.");
-                 // Fallback: Play chime when music button is first clicked
-                 musicButton.addEventListener('click', playOpeningChime, { once: true });
+                 hasInteracted = true; // Assume interaction happened if context is running
              }
-         });
+        }
+    });
 
-    </script>
-
+  </script>
 </body>
 </html>
