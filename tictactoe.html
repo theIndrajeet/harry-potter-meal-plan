@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogwarts Tic-Tac-Toe Tournament</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lora', serif; /* Magical body font */
+            touch-action: manipulation;
+            background-color: #f5f5dc; /* Parchment paper background */
+            /* Subtle gold sparkle pattern for the page background */
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23daa520' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .game-title-bar {
+            font-family: 'Cinzel', serif;
+            background-color: #740001; /* Gryffindor maroon */
+            color: #D3A625; /* Gryffindor gold */
+            padding: 0.75rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #DAA520; /* Darker Gold border */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        .game-container-wrapper { /* Renamed from game-container to avoid conflict if you only copied style */
+            background-color: #FFF8DC; /* Cornsilk - a lighter parchment */
+            border: 2px solid #8B4513; /* SaddleBrown - like old leather */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 0 15px rgba(139,69,19,0.5) inset;
+            position: relative; /* For the ::before pseudo-element */
+            border-radius: 0.5rem; /* Ensure this matches title bar for bottom part */
+        }
+        .game-container-wrapper::before { /* Pattern for the game container */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b4513' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.2;
+            pointer-events: none;
+            border-radius: 0 0 0.5rem 0.5rem; /* Match parent's bottom rounding */
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: bold;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            border: 2px solid #8B4513; /* SaddleBrown border for cells */
+            transition: all 0.3s ease-in-out; /* Combined transition */
+            background-color: #FAF0E6; /* Linen - very light parchment for cells */
+            position: relative; /* For ::after pseudo-element */
+            overflow: hidden; /* To contain the hover effect */
+        }
+        .cell:hover {
+            background-color: #F0E68C; /* Khaki - a light gold hover */
+            transform: scale(1.03);
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5); /* Golden glow */
+        }
+        .cell:hover::after { /* Radial gradient glow on hover */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0) 70%);
+            pointer-events: none;
+        }
+        @media (max-width: 400px) {
+            .cell {
+                width: 80px;
+                height: 80px;
+                font-size: 2.8rem;
+            }
+            #gameBoard {
+                grid-template-columns: repeat(3, 80px);
+            }
+            .game-title-bar {
+                font-size: 1.5rem;
+            }
+            .house-badge {
+                padding: 0.3rem 0.6rem;
+                min-width: 70px;
+            }
+            .house-name {
+                font-size: 0.65rem;
+            }
+            .house-score {
+                font-size: 1.3rem;
+            }
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        .winning-cell {
+            background-color: #FFEC8B !important; /* LightGoldenrod1 - glowing win */
+            color: #740001 !important; /* Maroon text on win, ensure it overrides player color */
+            animation: pulsate 1.5s infinite alternate;
+        }
+        @keyframes pulsate { /* Pulsating glow for winning cells */
+            0% { box-shadow: 0 0 10px #FFD700, 0 0 5px #FFD700 inset; }
+            100% { box-shadow: 0 0 20px #FFD700, 0 0 30px #FFA500, 0 0 10px #FFD700 inset; }
+        }
+        .x-color { /* Gryffindor Gold */
+            color: #D3A625;
+            text-shadow: 1px 1px 2px #00000060;
+        }
+        .o-color { /* Slytherin Green */
+            color: #1A472A;
+            text-shadow: 1px 1px 2px #00000060;
+        }
+        .status-message {
+            min-height: 40px; /* Adjusted for potentially longer messages */
+            color: #5D4037; /* Dark Brown text - like ink on parchment */
+            font-weight: 600;
+            font-size: 1.15rem; /* Slightly adjusted */
+            font-style: italic;
+            text-shadow: 0px 0px 1px rgba(0,0,0,0.2);
+        }
+        .btn { /* Base button style */
+            font-family: 'Cinzel', serif;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-weight: 700; /* Bold */
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2), 0 2px 4px -1px rgba(0,0,0,0.12);
+            letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden; /* For the shine effect */
+            cursor: pointer;
+        }
+        .btn::before { /* Shine effect for buttons */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn-restart {
+            background-color: #D3A625; /* Gryffindor gold */
+            color: #740001; /* Gryffindor maroon */
+            border: 1px solid #740001;
+        }
+        .btn-restart:hover {
+            background-color: #E7B62A; /* Brighter gold */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px -1px rgba(0,0,0,0.25), 0 4px 6px -1px rgba(0,0,0,0.15);
+        }
+        .btn-restart:active {
+            background-color: #B8860B; /* Darker Goldenrod */
+            transform: translateY(0px);
+        }
+        .btn-home {
+            background-color: #1A472A; /* Slytherin green */
+            color: #AAAAAA; /* Silver */
+            border: 1px solid #2A623D; /* Darker green border */
+            margin-left: 0.5rem;
+        }
+        .btn-home:hover {
+            background-color: #2A623D; /* Lighter Slytherin green */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px -1px rgba(0,0,0,0.25), 0 4px 6px -1px rgba(0,0,0,0.15);
+        }
+        .btn-home:active {
+            background-color: #0D2818; /* Darker Slytherin green */
+            transform: translateY(0px);
+        }
+        .magical-effect { /* Sparkle animation for cell clicks */
+            animation: sparkle 0.3s ease-in-out;
+        }
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; box-shadow: 0 0 10px currentColor; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        /* House colors for scoreboard */
+        .house-colors-scoreboard { /* Renamed to avoid conflict */
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem; /* Space below scoreboard */
+        }
+        .house-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin: 0 0.5rem;
+            min-width: 90px; /* Slightly wider badges */
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .gryffindor-badge { /* Specific class for Gryffindor */
+            background-color: #740001; /* Maroon */
+            color: #D3A625; /* Gold */
+            border: 2px solid #D3A625;
+        }
+        .slytherin-badge { /* Specific class for Slytherin */
+            background-color: #1A472A; /* Green */
+            color: #AAAAAA; /* Silver */
+            border: 2px solid #AAAAAA;
+        }
+        .house-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem; /* Slightly larger name */
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+        .house-score {
+            font-size: 1.75rem; /* Larger score display */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="game-container-wrapper w-full max-w-md"> <div class="game-title-bar">
+            Hogwarts Tic-Tac-Toe Tournament
+        </div>
+        <div class="p-5 md:p-6 rounded-b-lg relative"> <div class="house-colors-scoreboard"> <div class="house-badge gryffindor-badge"> <div class="house-name">Gryffindor</div>
+                    <div class="house-score" id="gryffindorScore">0</div>
+                </div>
+                <div class="house-badge slytherin-badge"> <div class="house-name">Slytherin</div>
+                    <div class="house-score" id="slytherinScore">0</div>
+                </div>
+            </div>
+            
+            <div id="statusArea" class="status-message text-center mb-6">
+                </div>
+
+            <div id="gameBoard" class="grid grid-cols-3 gap-1 mx-auto w-max bg-amber-700 bg-opacity-20 rounded-lg overflow-hidden shadow-inner">
+                </div>
+
+            <div class="mt-8 text-center flex justify-center">
+                <button id="restartButton" class="btn btn-restart">
+                    <span>Reparo!</span> (Restart)
+                </button>
+                <button id="homeButton" class="btn btn-home">
+                    <span>Portus!</span> (Home)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DOM Elements ---
+        const gameBoardElement = document.getElementById('gameBoard');
+        const statusAreaElement = document.getElementById('statusArea');
+        const restartButtonElement = document.getElementById('restartButton');
+        const homeButtonElement = document.getElementById('homeButton');
+        const gryffindorScoreElement = document.getElementById('gryffindorScore');
+        const slytherinScoreElement = document.getElementById('slytherinScore');
+
+        // --- Game State Variables ---
+        let currentPlayerSymbol = 'X'; // 'X' for Gryffindor (starts)
+        let currentPlayerName = "Gryffindor Wizard";
+        let boardState = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+        let winningCombination = null;
+        let gryffindorPoints = 0;
+        let slytherinPoints = 0;
+
+        // --- Game Sounds (Placeholders - replace with actual sound file URLs or use Tone.js for generated sounds) ---
+        // Using very short, silent base64 WAVs as placeholders to avoid console errors if not replaced.
+        // For real sounds, you'd use: const spellSound = new Audio('path/to/spell.mp3');
+        const spellSound = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAVCsAAFQrAAABAAgAZGF0YQQAAAAoAA==");
+        const winSound = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAVCsAAFQrAAABAAgAZGF0YQQAAAAoAA==");
+
+        // --- Winning Combinations ---
+        const winningConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6]             // Diagonals
+        ];
+
+        // --- Player Symbols (can be customized further, e.g., with SVG icons) ---
+        const playerSymbols = {
+            'X': '🦁', // Gryffindor Lion Emoji (or 'X')
+            'O': '🐍'  // Slytherin Snake Emoji (or 'O')
+        };
+        // Fallback to X and O if emojis don't render well or are not desired
+        // const playerSymbols = { 'X': 'X', 'O': 'O' };
+
+
+        // --- Magic Spells for Status Messages ---
+        const spells = {
+            win: [
+                "Expecto Patronum! A brilliant victory!", "Wingardium Leviosa! Soaring to triumph!",
+                "Incendio! A fiery win!", "Lumos Maxima! Victory shines bright!", "Stupefy! Opponent stunned!"
+            ],
+            draw: [
+                "Finite Incantatem! The duel ends in a draw!", "Immobulus! Both wizards are deadlocked!",
+                "Arresto Momentum! The magic stalls!", "Protego Maxima! All spells neutralized!"
+            ],
+            turn: [
+                "Alohomora! Unlock your strategy!", "Accio Victory! Summon your next move!",
+                "Revelio! Reveal your tactics!", "Confundo! Time for your move!", "Diffindo! Make your mark!"
+            ]
+        };
+
+        // --- Functions ---
+
+        /**
+         * Gets a random spell message from the category.
+         * @param {string} category - The category of spell (win, draw, turn).
+         * @returns {string} A random spell message.
+         */
+        function getRandomSpell(category) {
+            const options = spells[category];
+            return options[Math.floor(Math.random() * options.length)];
+        }
+
+        /**
+         * Creates a magical particle effect on the given element.
+         * @param {HTMLElement} element - The HTML element to apply the effect to.
+         * @param {string} playerSymbol - The symbol of the current player ('X' or 'O').
+         */
+        function createMagicalEffect(element, playerSymbol) {
+            // Set the color of the sparkle based on the player
+            const sparkleColor = playerSymbol === 'X' ? '#D3A625' : '#1A472A'; // Gryffindor Gold or Slytherin Green
+            element.style.setProperty('--sparkle-color', sparkleColor);
+            element.classList.add('magical-effect');
+            // Remove the class after the animation completes
+            setTimeout(() => {
+                element.classList.remove('magical-effect');
+                element.style.removeProperty('--sparkle-color');
+            }, 300); // Duration of the sparkle animation
+        }
+
+
+        /**
+         * Sets the initial status message.
+         */
+        function setInitialStatus() {
+            const spell = getRandomSpell('turn');
+            statusAreaElement.innerHTML = `${currentPlayerName}'s turn! <span class="italic text-sm block">${spell}</span>`;
+        }
+
+        /**
+         * Updates the score display on the scoreboard.
+         */
+        function updateScores() {
+            gryffindorScoreElement.textContent = gryffindorPoints;
+            slytherinScoreElement.textContent = slytherinPoints;
+        }
+
+        /**
+         * Handles a click on a cell (a "spell cast").
+         * @param {Event} event - The click event.
+         * @param {number} cellIndex - The index of the clicked cell (0-8).
+         */
+        function handleCellClick(event, cellIndex) {
+            const clickedCell = event.target.closest('.cell'); // Ensure we get the cell div
+
+            if (!clickedCell || boardState[cellIndex] !== '' || !gameActive) {
+                return;
+            }
+
+            // Play spell casting sound (optional, might be annoying)
+            // try { spellSound.play().catch(e => console.warn("Audio play failed:", e)); } catch (e) {}
+
+            boardState[cellIndex] = currentPlayerSymbol;
+            clickedCell.textContent = playerSymbols[currentPlayerSymbol];
+            clickedCell.classList.add(currentPlayerSymbol === 'X' ? 'x-color' : 'o-color');
+            
+            createMagicalEffect(clickedCell, currentPlayerSymbol);
+
+            if (checkWin()) {
+                const spell = getRandomSpell('win');
+                statusAreaElement.innerHTML = `<span class="font-bold">${currentPlayerName} wins 10 points!</span> <span class="italic text-sm block">${spell}</span> 🎉`;
+                highlightWinningCells();
+                gameActive = false;
+                
+                if (currentPlayerSymbol === 'X') { // Gryffindor wins
+                    gryffindorPoints += 10;
+                } else { // Slytherin wins
+                    slytherinPoints += 10;
+                }
+                updateScores();
+                // try { winSound.play().catch(e => console.warn("Audio play failed:", e)); } catch (e) {}
+            } else if (checkDraw()) {
+                const spell = getRandomSpell('draw');
+                statusAreaElement.innerHTML = `<span class="font-bold">A magical stalemate! 5 points to each House!</span> <span class="italic text-sm block">${spell}</span> 🤝`;
+                gameActive = false;
+                gryffindorPoints += 5;
+                slytherinPoints += 5;
+                updateScores();
+            } else {
+                currentPlayerSymbol = currentPlayerSymbol === 'X' ? 'O' : 'X';
+                currentPlayerName = currentPlayerSymbol === 'X' ? "Gryffindor Wizard" : "Slytherin Wizard";
+                const spell = getRandomSpell('turn');
+                statusAreaElement.innerHTML = `${currentPlayerName}'s turn! <span class="italic text-sm block">${spell}</span>`;
+            }
+        }
+
+        /**
+         * Checks if the current player has won.
+         * @returns {boolean} True if the current player has won, false otherwise.
+         */
+        function checkWin() {
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                if (boardState[a] === currentPlayerSymbol &&
+                    boardState[b] === currentPlayerSymbol &&
+                    boardState[c] === currentPlayerSymbol) {
+                    winningCombination = winningConditions[i];
+                    return true;
+                }
+            }
+            winningCombination = null;
+            return false;
+        }
+
+        /**
+         * Highlights the winning cells with a sequential magical effect.
+         */
+        function highlightWinningCells() {
+            if (winningCombination) {
+                winningCombination.forEach((index, i) => {
+                    if (gameBoardElement.children[index]) {
+                        setTimeout(() => {
+                            gameBoardElement.children[index].classList.add('winning-cell');
+                        }, i * 150); // Stagger the animation for each cell in the winning line
+                    }
+                });
+            }
+        }
+
+        /**
+         * Checks if the game is a draw (all cells filled, no winner).
+         * @returns {boolean} True if the game is a draw, false otherwise.
+         */
+        function checkDraw() {
+            return boardState.every(cell => cell !== '');
+        }
+
+        /**
+         * Resets the game for a new round.
+         */
+        function restartGame() {
+            currentPlayerSymbol = 'X'; // Gryffindor always starts the new round
+            currentPlayerName = "Gryffindor Wizard";
+            boardState = ['', '', '', '', '', '', '', '', ''];
+            gameActive = true;
+            winningCombination = null;
+            setInitialStatus();
+
+            Array.from(gameBoardElement.children).forEach((cell, index) => {
+                setTimeout(() => { // Stagger the clearing effect
+                    cell.textContent = '';
+                    cell.classList.remove('x-color', 'o-color', 'winning-cell');
+                    // Optional: Add a subtle clear effect
+                    // createMagicalEffect(cell, 'clear'); // Need to define 'clear' color or handle differently
+                }, index * 40);
+            });
+        }
+
+        /**
+         * Simulates returning to a home page.
+         */
+        function goHome() {
+            alert("Portus! You would be magically transported to the Great Hall (Home Page). This is a simulation.");
+            // For a real site: window.location.href = '/index.html'; or your home page URL
+        }
+
+        /**
+         * Initializes the game board by creating the cells.
+         */
+        function initializeBoard() {
+            gameBoardElement.innerHTML = ''; // Clear previous board if any
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                // Add rounded corners to specific cells for the overall board rounding
+                if (i === 0) cell.classList.add('rounded-tl-md');
+                if (i === 2) cell.classList.add('rounded-tr-md');
+                if (i === 6) cell.classList.add('rounded-bl-md');
+                if (i === 8) cell.classList.add('rounded-br-md');
+
+                cell.dataset.index = i;
+                cell.addEventListener('click', (event) => handleCellClick(event, i));
+                cell.addEventListener('touchend', (event) => {
+                    event.preventDefault();
+                    handleCellClick(event, i);
+                });
+                gameBoardElement.appendChild(cell);
+            }
+        }
+
+        // --- Event Listeners ---
+        restartButtonElement.addEventListener('click', restartGame);
+        restartButtonElement.addEventListener('touchend', (event) => {
+             event.preventDefault(); restartGame();
+        });
+        
+        homeButtonElement.addEventListener('click', goHome);
+        homeButtonElement.addEventListener('touchend', (event) => {
+             event.preventDefault(); goHome();
+        });
+
+        // --- Game Initialization ---
+        window.onload = () => {
+            initializeBoard();
+            setInitialStatus();
+            updateScores(); // Initialize scoreboard display
+        };
+    </script>
+
+</body>
+</html>
