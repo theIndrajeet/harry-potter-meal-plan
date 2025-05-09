@@ -11,202 +11,203 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <style>
         :root {
-            --parchment: #f5eeda;
-            --dark-brown: #3a2d21;
-            --maroon: #740001;
-            --gold: #eeba30;
-            --light-brown: #c8bfa8;
-            --owl-body-original: #8B4513; /* SaddleBrown */
-            --owl-beak-feet-original: #FFD700; /* Gold */
+            /* Base colors, also Gryffindor default */
+            --gryffindor-bg: #f5eeda; /* Parchment */
+            --gryffindor-text: #3a2d21; /* Dark Brown */
+            --gryffindor-primary: #740001; /* Scarlet */
+            --gryffindor-accent: #d3a625; /* Gold */
+            --gryffindor-secondary: #eeba30; /* Lighter Gold */
+            --gryffindor-container-bg: rgba(245, 238, 218, 0.9);
+
+
+            --slytherin-bg: #E8F5E9; /* Very Light Green/Grey */
+            --slytherin-text: #1A2B22; /* Dark Greenish Black */
+            --slytherin-primary: #1A472A; /* Emerald Green */
+            --slytherin-accent: #AAAAAA; /* Silver */
+            --slytherin-secondary: #556B2F; /* Dark Olive Green */
+            --slytherin-container-bg: rgba(210, 223, 211, 0.9);
+
+
+            --hufflepuff-bg: #FFF9C4; /* Light Canary Yellow */
+            --hufflepuff-text: #212121; /* Nearly Black */
+            --hufflepuff-primary: #FFB300; /* Vivid Yellow (Canary) */
+            --hufflepuff-accent: #000000; /* Black */
+            --hufflepuff-secondary: #757575; /* Medium Grey (for contrast with black) */
+            --hufflepuff-container-bg: rgba(255, 249, 226, 0.9);
+
+            --ravenclaw-bg: #E3F2FD; /* Pale Blue */
+            --ravenclaw-text: #0D47A1; /* Dark Blue */
+            --ravenclaw-primary: #222F5B; /* Midnight Blue */
+            --ravenclaw-accent: #946B2D; /* Bronze */
+            --ravenclaw-secondary: #5A7684; /* Bluish Grey / Darker Bronze */
+            --ravenclaw-container-bg: rgba(227, 242, 253, 0.9);
+
+            /* Owl Original Colors (remain constant) */
+            --owl-body-original: #8B4513;
+            --owl-beak-feet-original: #FFD700;
             --owl-eyes-original: #FFFFFF;
             --owl-pupils-original: #000000;
-            --owl-wing-highlight-original: #A0522D; /* Sienna */
+            --owl-wing-highlight-original: #A0522D;
+
+            /* Dynamic Theme Variables - Default to Gryffindor */
+            --theme-bg: var(--gryffindor-bg);
+            --theme-text: var(--gryffindor-text);
+            --theme-primary: var(--gryffindor-primary);
+            --theme-accent: var(--gryffindor-accent);
+            --theme-secondary: var(--gryffindor-secondary);
+            --theme-container-bg: var(--gryffindor-container-bg);
         }
 
         body {
             font-family: 'Merriweather', serif;
-            background-color: var(--parchment);
-            color: var(--dark-brown);
-            background-image: url('data:image/svg+xml,%3Csvg width="52" height="26" viewBox="0 0 52 26" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d2c4a8" fill-opacity="0.2"%3E%3Cpath d="M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z" /%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            background-color: var(--theme-bg);
+            color: var(--theme-text);
+            background-image: url('data:image/svg+xml,%3Csvg width="52" height="26" viewBox="0 0 52 26" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d2c4a8" fill-opacity="0.1"%3E%3Cpath d="M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z" /%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
             padding: 1rem;
+            overflow-y: auto;
+            transition: background-color 0.5s, color 0.5s;
         }
 
         .container {
-            background-color: rgba(255, 253, 248, 0.85); /* Light Parchment */
+            background-color: var(--theme-container-bg);
             padding: 2rem;
             border-radius: 10px;
-            border: 2px solid var(--light-brown);
+            border: 2px solid var(--theme-secondary);
             box-shadow: 0 8px 16px rgba(58, 45, 33, 0.3);
-            max-width: 500px; /* Adjusted for a more compact Pomodoro timer */
+            max-width: 550px;
             width: 100%;
+            margin-bottom: 2rem;
+            transition: border-color 0.5s, background-color 0.5s;
         }
 
         .header-title {
             font-family: 'Cinzel Decorative', cursive;
-            color: var(--maroon);
+            color: var(--theme-primary);
             text-align: center;
-            font-size: 2.2rem; /* Slightly smaller for this context */
-            margin-bottom: 1.5rem;
-            text-shadow: 1px 1px var(--gold);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px var(--theme-accent);
+            transition: color 0.5s, text-shadow 0.5s;
         }
 
-        /* Pixel Owl Styles */
-        .pixel-owl-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        .pixel-owl {
-            width: 80px; /* Base size, 8x10 grid of 10px pixels */
-            height: 100px;
-            display: grid;
-            grid-template-columns: repeat(8, 10px);
-            grid-template-rows: repeat(10, 10px);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-         .pixel-owl:hover {
-            transform: scale(1.05); /* Slight grow on hover */
-        }
-
-        .pixel {
-            background-color: transparent; /* Default */
-        }
+        .pixel-owl-container { display: flex; justify-content: center; align-items: center; margin-bottom: 0.5rem; position: relative; }
+        .pixel-owl { width: 80px; height: 100px; display: grid; grid-template-columns: repeat(8, 10px); grid-template-rows: repeat(10, 10px); position: relative; transition: transform 0.3s ease, filter 0.5s; }
+        .pixel-owl:hover { transform: scale(1.05); }
+        .pixel { background-color: transparent; }
         .owl-body-pixel { background-color: var(--owl-body-original); }
         .owl-beak-pixel { background-color: var(--owl-beak-feet-original); }
-        .owl-eye-pixel { background-color: var(--owl-eyes-original); }
+        .owl-eye-pixel { background-color: var(--owl-eyes-original); position: relative; }
         .owl-pupil-pixel { background-color: var(--owl-pupils-original); }
         .owl-wing-pixel { background-color: var(--owl-wing-highlight-original); }
         .owl-feet-pixel { background-color: var(--owl-beak-feet-original); }
+        .eyelid { position: absolute; width: 100%; height: 0%; background-color: var(--owl-body-original); animation: blink 4s infinite ease-in-out 1s; bottom: 0; left:0; }
+        @keyframes blink { 0%, 90%, 100% { height: 0%; } 92%, 98% { height: 100%; } }
+        @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } }
 
-        /* Owl Blinking Animation */
-        .eye-left, .eye-right { /* These classes were in your HTML but not styled, added for completeness if needed */
-            position: relative;
-        }
-        .eyelid {
-            position: absolute;
-            width: 100%;
-            height: 0%; /* Start closed for blink */
-            background-color: var(--owl-body-original);
-            animation: blink 4s infinite ease-in-out 1s; /* Delay first blink */
-            bottom: 0; /* For blinking from top-down */
-        }
-        @keyframes blink {
-            0%, 90%, 100% { height: 0%; } /* Eye open */
-            92%, 98% { height: 100%; } /* Eye closed */
-        }
+        .owl-status { text-align: center; margin-bottom: 0.5rem; font-size: 1rem; color: var(--theme-primary); transition: color 0.5s;}
+        .owl-status .energy-bar-container { width: 100px; height: 12px; background-color: var(--theme-secondary); border: 1px solid var(--theme-text); border-radius: 4px; margin: 0.3rem auto; overflow: hidden; transition: background-color 0.5s, border-color 0.5s; }
+        .owl-status .energy-bar { height: 100%; width: 100%; background-color: var(--theme-accent); transition: width 0.5s ease-in-out, background-color 0.5s; }
 
+        .progress-container { position: relative; width: 220px; height: 220px; margin: 0 auto 1rem; }
+        .progress-ring { transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .progress-ring-circle { stroke: var(--theme-accent); fill: transparent; stroke-linecap: round; transition: stroke-dashoffset 0.3s ease, stroke 0.5s; }
+        .progress-ring-background { stroke: var(--theme-secondary); fill: transparent; transition: stroke 0.5s;}
+        .timer-display-inside-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Cinzel Decorative', cursive; font-size: 2.2rem; color: var(--theme-primary); text-align: center; text-shadow: 1px 1px var(--theme-accent); transition: color 0.5s, text-shadow 0.5s; }
 
-        .owl-status {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            color: var(--maroon); /* Changed from --dark-maroon as it wasn't defined */
-        }
-        .owl-status .energy-bar-container {
-            width: 100px;
-            height: 15px;
-            background-color: var(--light-brown);
-            border: 1px solid var(--dark-brown);
-            border-radius: 5px;
-            margin: 0.5rem auto;
-            overflow: hidden;
-        }
-        .owl-status .energy-bar {
-            height: 100%;
-            width: 100%; /* Full initially */
-            background-color: var(--gold);
-            transition: width 0.5s ease-in-out;
-        }
+        .timer-status-text { text-align: center; font-size: 1rem; margin-bottom: 0.5rem; color: var(--theme-text); transition: color 0.5s; }
+        .cycle-count-display { text-align: center; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--theme-text); transition: color 0.5s;}
+        .timer-mode-selector { text-align: center; margin-bottom: 1rem; display:flex; justify-content:center; gap: 0.5rem;}
+        .timer-type-btn { font-family: 'Cinzel Decorative', cursive; padding: 0.5rem 0.8rem; border-radius: 5px; border: 1px solid var(--theme-secondary); background-color: transparent; color: var(--theme-text); transition: all 0.3s; cursor: pointer; }
+        .timer-type-btn.active { background-color: var(--theme-accent); border-color: var(--theme-primary); color: var(--theme-primary); font-weight: bold; }
+        .timer-type-btn:hover:not(.active) { background-color: var(--theme-secondary); opacity:0.8; }
 
+        .timer-controls button, .pet-controls button, .utility-buttons button, #addTaskBtn, .modal-buttons button { font-family: 'Cinzel Decorative', cursive; background-color: var(--theme-accent); color: var(--theme-primary); border: 2px solid var(--theme-primary); padding: 0.6rem 1.2rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, border-color 0.3s; box-shadow: 0 2px 4px rgba(58, 45, 33, 0.3); margin: 0.3rem; font-size: 0.9rem; white-space: nowrap; }
+        .timer-controls button:hover, .pet-controls button:hover, .utility-buttons button:hover, #addTaskBtn:hover, .modal-buttons button:hover { background-color: var(--theme-primary); color: var(--theme-accent); box-shadow: 0 4px 8px rgba(58, 45, 33, 0.5); }
+        .timer-controls button:disabled, .pet-controls button:disabled, .utility-buttons button:disabled, #addTaskBtn:disabled, .modal-buttons button:disabled { background-color: var(--theme-secondary); color: #888 !important; border-color: #888 !important; cursor: not-allowed; opacity: 0.7; }
 
-        /* Pomodoro Timer Styles */
-        .timer-display {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 3.5rem;
-            color: var(--maroon);
-            text-align: center;
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px var(--gold);
-        }
-        .timer-controls button, .pet-controls button {
-            font-family: 'Cinzel Decorative', cursive;
-            background-color: var(--gold);
-            color: var(--maroon);
-            border: 2px solid var(--maroon);
-            padding: 0.6rem 1.2rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 4px rgba(58, 45, 33, 0.3);
-            margin: 0.3rem;
-            font-size: 0.9rem;
-        }
-        .timer-controls button:hover, .pet-controls button:hover {
-            background-color: var(--maroon);
-            color: var(--gold);
-            box-shadow: 0 4px 8px rgba(58, 45, 33, 0.5);
-        }
-        .timer-controls button:disabled, .pet-controls button:disabled {
-            background-color: var(--light-brown);
-            color: #888;
-            border-color: #888;
-            cursor: not-allowed;
-        }
-        .timer-status, .treat-count { /* Combined timer-status and treat-count as they had identical styling */
-            text-align: center;
-            font-size: 1rem;
-            margin-top: 0.5rem;
-            color: var(--dark-brown);
-        }
-        .pet-controls {
-            margin-top: 1.5rem;
-            text-align: center;
-        }
+        .task-list-container { margin: 1.5rem 0; border-top: 1px solid var(--theme-secondary); padding-top: 1rem; transition: border-color 0.5s;}
+        .task-list-container .section-title { font-family: 'Cinzel Decorative', cursive; font-size: 1.2rem; margin-bottom: 0.8rem; color: var(--theme-primary); text-align: center; transition: color 0.5s; }
+        #currentTaskDisplay { text-align: center; margin-bottom: 0.8rem; font-style: italic; color: var(--theme-text); font-size: 0.95rem; font-weight: bold; transition: color 0.5s; }
+        .task-input-container { display: flex; margin-bottom: 0.8rem; }
+        #taskInput { flex-grow: 1; padding: 0.6rem; border: 1px solid var(--theme-secondary); border-radius: 5px 0 0 5px; font-family: 'Merriweather', serif; background-color: white; color: var(--dark-brown); border-right: none; }
+        #addTaskBtn { border-radius: 0 5px 5px 0; }
 
-        /* Message Box */
-        .message-box {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--maroon);
-            color: var(--gold);
-            padding: 1rem 1.5rem;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            z-index: 200;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out;
-            font-family: 'Cinzel Decorative', cursive;
-        }
-        .message-box.show {
-            opacity: 1;
-            top: 40px;
-        }
-         /* Back Button */
+        #tasksList { list-style: none; padding: 0; max-height: 150px; overflow-y: auto; }
+        #tasksList li { background-color: rgba(255,255,255,0.6); padding: 0.7rem; margin-bottom: 0.5rem; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--theme-text); border-left: 5px solid var(--theme-accent); transition: background-color 0.2s, color 0.5s, border-left-color 0.5s; }
+        #tasksList li:hover { background-color: rgba(200,191,168,0.2); } /* Default hover */
+        body[data-active-theme="gryffindor"] #tasksList li:hover { background-color: rgba(211,166,37,0.15); }
+        body[data-active-theme="slytherin"] #tasksList li:hover { background-color: rgba(170,170,170,0.15); }
+        body[data-active-theme="hufflepuff"] #tasksList li:hover { background-color: rgba(0,0,0,0.05); }
+        body[data-active-theme="ravenclaw"] #tasksList li:hover { background-color: rgba(148,107,45,0.15); }
+
+        #tasksList li.completed { text-decoration: line-through; color: #777 !important; border-left-color: var(--theme-secondary) !important; opacity: 0.6; }
+        #tasksList li.active-task { border-left-color: var(--theme-primary) !important; background-color: rgba(128,128,128,0.1); } /* Generic active */
+        body[data-active-theme="gryffindor"] #tasksList li.active-task { background-color: rgba(116,0,1,0.1); }
+        body[data-active-theme="slytherin"] #tasksList li.active-task { background-color: rgba(26,71,42,0.15); }
+        body[data-active-theme="hufflepuff"] #tasksList li.active-task { background-color: rgba(255,219,0,0.15); }
+        body[data-active-theme="ravenclaw"] #tasksList li.active-task { background-color: rgba(34,47,91,0.15); }
+
+        #tasksList li .task-text { flex-grow: 1; cursor: pointer; padding-right: 0.5rem; }
+        #tasksList li .task-actions button { background: none; border: none; color: var(--theme-primary); cursor: pointer; font-size: 1.1rem; padding: 0.1rem 0.3rem; margin-left: 0.4rem; line-height: 1; transition: color 0.3s; }
+        #tasksList li .task-actions button:hover { color: var(--theme-accent); }
+
+        .theme-controls { margin: 1rem 0; text-align: center; }
+        .theme-controls .section-title { font-family: 'Cinzel Decorative', cursive; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--theme-primary); transition: color 0.5s; }
+        .theme-buttons { display: flex; justify-content: center; gap: 0.8rem; }
+        .theme-btn { width: 35px; height: 35px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: transform 0.3s, border-color 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .theme-btn:hover { transform: scale(1.1); }
+        .theme-btn.active { border-color: var(--theme-text); transform: scale(1.15); box-shadow: 0 2px 5px rgba(0,0,0,0.3); transition: border-color 0.5s;}
+
+        .pet-controls { margin-top: 1rem; text-align: center; }
+        .treat-count { text-align: center; font-size: 1rem; margin-top:0.5rem; margin-bottom: 0.5rem; color: var(--theme-text); transition: color 0.5s;}
+
+        .stats-container { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--theme-secondary); transition: border-color 0.5s;}
+        .stats-container .section-title { font-family: 'Cinzel Decorative', cursive; font-size: 1.2rem; margin-bottom: 0.8rem; color: var(--theme-primary); text-align: center; transition: color 0.5s; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-top: 0.8rem; }
+        .stat-item { background-color: var(--theme-container-bg); opacity: 0.9; padding: 0.8rem; border-radius: 5px; border: 1px solid var(--theme-secondary); text-align: center; transition: background-color 0.5s, border-color 0.5s; }
+        .stat-value { font-size: 1.5rem; font-weight: bold; color: var(--theme-primary); margin-bottom: 0.3rem; transition: color 0.5s;}
+        .stat-label { font-size: 0.8rem; color: var(--theme-text); transition: color 0.5s;}
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background-color: var(--theme-bg); padding: 2rem; border-radius: 10px; border: 2px solid var(--theme-secondary); box-shadow: 0 8px 16px rgba(58, 45, 33, 0.4); max-width: 500px; width: 90%; position: relative; transition: background-color 0.5s, border-color 0.5s; }
+        .close-button { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; cursor: pointer; color: var(--theme-primary); transition: color 0.5s; }
+        .settings-header { font-family: 'Cinzel Decorative', cursive; color: var(--theme-primary); text-align: center; font-size: 1.8rem; margin-bottom: 1.5rem; text-shadow: 1px 1px var(--theme-accent); transition: color 0.5s, text-shadow 0.5s; }
+        .settings-group { margin-bottom: 1rem; }
+        .settings-label { display: block; font-weight: bold; margin-bottom: 0.5rem; color: var(--theme-text); transition: color 0.5s;}
+        .settings-input, .modal-content input[type="number"] { width: 100%; padding: 0.5rem; border: 1px solid var(--theme-secondary); border-radius: 3px; margin-bottom: 0.5rem; font-family: 'Merriweather', serif; background-color: white; color: var(--dark-brown); transition: border-color 0.5s; }
+        .modal-content input[type="checkbox"] { width: auto; margin-right: 0.5rem; vertical-align: middle; }
+        .modal-checkbox-label { font-weight: normal; display: inline; font-size: 0.9rem; color: var(--theme-text); transition: color 0.5s;}
+        .settings-button-container { text-align: center; margin-top: 1.5rem; }
+        #cancelSettingsButton { background-color: var(--theme-secondary); border-color: var(--theme-text); color: var(--theme-text); }
+        #cancelSettingsButton:hover { background-color: var(--theme-text); color: var(--theme-bg); border-color: var(--theme-bg); }
+
+        .utility-buttons { text-align: center; margin: 1rem 0; }
+        .switch-container { display: flex; align-items: center; justify-content: center; margin: 0.5rem auto; }
+        .switch-label { margin-right: 0.8rem; color: var(--theme-text); font-family: 'Cinzel Decorative', cursive; transition: color 0.5s;}
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--theme-secondary); transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--theme-primary); }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        .message-box { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: var(--theme-primary); color: var(--theme-accent); padding: 1rem 1.5rem; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 1001; opacity: 0; transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out, background-color 0.5s, color 0.5s; font-family: 'Cinzel Decorative', cursive; pointer-events: none; }
+        .message-box.show { opacity: 1; top: 40px; }
+
         .back-button-container { text-align: left; margin-bottom: 1rem; }
-        .back-button {
-            display: inline-block; font-family: 'Cinzel Decorative', cursive;
-            background-color: rgba(192, 192, 192, 0.7); color: var(--dark-brown);
-            border: 1px solid var(--maroon); padding: 6px 12px; border-radius: 5px;
-            cursor: pointer; transition: all 0.3s; text-decoration: none;
-        }
-        .back-button:hover { background-color: var(--maroon); color: var(--gold); box-shadow: 0 2px 5px rgba(58, 45, 33, 0.4); }
+        .back-button { display: inline-block; font-family: 'Cinzel Decorative', cursive; background-color: rgba(192, 192, 192, 0.7); color: var(--dark-brown); border: 1px solid var(--maroon); padding: 6px 12px; border-radius: 5px; cursor: pointer; transition: all 0.3s; text-decoration: none; }
+        .back-button:hover { background-color: var(--maroon); color: var(--gold); }
 
     </style>
 </head>
-<body>
-    <div class="container">
+<body data-active-theme="gryffindor"> <div class="container">
         <div class="back-button-container">
-             <a href="index.html" class="back-button">← To Shared Universe</a>
+             <a href="#" class="back-button" onclick="alert('Navigation to Shared Universe would go here. For now, this is a placeholder.'); return false;">← Common Room</a>
         </div>
         <h1 class="header-title">Magical Owl Pomodoro</h1>
 
@@ -215,7 +216,7 @@
                 <div class="pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel"></div>
                 <div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div>
                 <div class="pixel owl-body-pixel"></div><div class="pixel owl-eye-pixel eye-left"><div class="eyelid"></div></div><div class="pixel owl-pupil-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-eye-pixel eye-right"><div class="eyelid"></div></div><div class="pixel owl-pupil-pixel"></div><div class="pixel owl-body-pixel"></div>
-                <div class="pixel owl-body-pixel"></div><div class="pixel owl-pupil-pixel"></div><div class="pixel owl-eye-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-pupil-pixel"></div><div class="pixel owl-eye-pixel"></div><div class="pixel owl-body-pixel"></div>
+                <div class="pixel owl-body-pixel"></div><div class="pixel owl-pupil-pixel"></div><div class="pixel owl-eye-pixel"><div class="eyelid"></div></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-pupil-pixel"></div><div class="pixel owl-eye-pixel"><div class="eyelid"></div></div><div class="pixel owl-body-pixel"></div>
                 <div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-beak-pixel"></div><div class="pixel owl-beak-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div>
                 <div class="pixel owl-body-pixel"></div><div class="pixel owl-wing-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-wing-pixel"></div><div class="pixel owl-body-pixel"></div>
                 <div class="pixel"></div><div class="pixel owl-wing-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-body-pixel"></div><div class="pixel owl-wing-pixel"></div><div class="pixel"></div>
@@ -231,271 +232,700 @@
             </div>
         </div>
 
-        <div class="timer-display" id="timerDisplay">25:00</div>
-        <div class="timer-status" id="timerStatus">Ready to focus?</div>
+        <div class="progress-container">
+            <svg class="progress-ring" width="220" height="220">
+                <circle class="progress-ring-background" stroke-width="10" r="100" cx="110" cy="110"></circle>
+                <circle id="progressRingCircle" class="progress-ring-circle" stroke-width="10" r="100" cx="110" cy="110"></circle>
+            </svg>
+            <div class="timer-display-inside-circle" id="timerDisplay">25:00</div>
+        </div>
+
+        <div class="timer-status-text" id="timerStatusText">Ready to focus?</div>
+        <div class="cycle-count-display" id="cycleCountDisplay">Cycles: 0 / 4</div>
+        <div class="timer-mode-selector text-center mb-4">
+            <button id="workModeBtn" class="timer-type-btn active" data-mode="work">Study</button>
+            <button id="shortBreakModeBtn" class="timer-type-btn" data-mode="shortBreak">Short Break</button>
+            <button id="longBreakModeBtn" class="timer-type-btn" data-mode="longBreak">Long Break</button>
+        </div>
+
         <div class="timer-controls text-center">
-            <button id="startButton">Start Work</button>
+            <button id="startButton">Begin Study</button>
             <button id="pauseButton" disabled>Pause</button>
-            <button id="resetButton">Reset</button>
+            <button id="resetDayButton">Reset Day</button>
+            <button id="openSettingsModalButton" class="settings-button">⚙️ Settings</button>
+        </div>
+
+        <div class="task-list-container">
+            <h3 class="section-title" id="taskSectionTitle">Owl Post: Your Assignments</h3>
+            <div id="currentTaskDisplay">No assignment selected.</div>
+            <div class="task-input-container">
+                <input type="text" id="taskInput" class="task-input" placeholder="Jot down your next assignment...">
+                <button id="addTaskBtn" class="add-task-btn">Add Assignment</button>
+            </div>
+            <ul id="tasksList" class="tasks-list"></ul>
+        </div>
+
+        <div class="theme-controls">
+            <h3 class="section-title" id="themeSectionTitle">Declare Your House Allegiance</h3>
+            <div class="theme-buttons">
+                <div class="theme-btn active" data-theme="gryffindor" style="background: linear-gradient(135deg, #AE0001 50%, #EEBA30 50%);" title="Gryffindor"></div>
+                <div class="theme-btn" data-theme="slytherin" style="background: linear-gradient(135deg, #1A472A 50%, #AAAAAA 50%);" title="Slytherin"></div>
+                <div class="theme-btn" data-theme="hufflepuff" style="background: linear-gradient(135deg, #FFDB00 50%, #000000 50%);" title="Hufflepuff"></div>
+                <div class="theme-btn" data-theme="ravenclaw" style="background: linear-gradient(135deg, #0E1A40 50%, #946B2D 50%);" title="Ravenclaw"></div>
+            </div>
+        </div>
+        
+        <div class="utility-buttons">
+             <div class="switch-container">
+                <span class="switch-label" id="soundStatusLabel">Sounds On 🔊</span>
+                <label class="switch">
+                    <input type="checkbox" id="soundToggleCheckbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
 
         <div class="pet-controls">
-            <p class="treat-count">Owl Treats 🦉: <span id="treatCount">0</span></p>
-            <button id="feedOwlButton" disabled>Feed Hedwig (1 Treat)</button>
+            <p class="treat-count" id="treatCountText">Owl Post Treats 🦉: <span id="treatCountDisplay">0</span></p>
+            <button id="feedOwlButton" disabled>Give Hedwig a Treat</button>
+        </div>
+
+        <div class="stats-container">
+            <h3 class="section-title">Your Progress Parchment</h3>
+            <div class="stats-grid">
+                <div class="stat-item"><div class="stat-value" id="statTotalWorkSessions">0</div><div class="stat-label">Study Sessions</div></div>
+                <div class="stat-item"><div class="stat-value" id="statTotalWorkMinutes">0</div><div class="stat-label">Minutes Focused</div></div>
+                <div class="stat-item"><div class="stat-value" id="statTasksCompleted">0</div><div class="stat-label">Assignments Done</div></div>
+                <div class="stat-item"><div class="stat-value" id="statCurrentStreak">0</div><div class="stat-label">Day Streak</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeSettingsModalBtn">&times;</span>
+            <h2 class="settings-header">Magical Timer Settings</h2>
+            <div class="settings-group">
+                <label for="workTimeInput" class="settings-label">Study Duration (minutes):</label>
+                <input type="number" id="workTimeInput" class="settings-input" min="1" value="25">
+            </div>
+            <div class="settings-group">
+                <label for="shortBreakTimeInput" class="settings-label">Short Break (minutes):</label>
+                <input type="number" id="shortBreakTimeInput" class="settings-input" min="0" value="5">
+            </div>
+            <div class="settings-group">
+                <label for="longBreakTimeInput" class="settings-label">Long Break (minutes):</label>
+                <input type="number" id="longBreakTimeInput" class="settings-input" min="0" value="15">
+            </div>
+            <div class="settings-group">
+                <label for="cycleGoalInput" class="settings-label">Daily Study Goal (sessions):</label>
+                <input type="number" id="cycleGoalInput" class="settings-input" min="1" value="4">
+            </div>
+             <div class="settings-group">
+                <label for="longBreakIntervalInput" class="settings-label">Long Break After (study sessions):</label>
+                <input type="number" id="longBreakIntervalInput" class="settings-input" min="1" value="4">
+            </div>
+            <div class="settings-group">
+                <input type="checkbox" id="autoStartTimersInput" style="width:auto; margin-right: 0.5rem;">
+                <label for="autoStartTimersInput" class="modal-checkbox-label">Auto-start next session</label>
+            </div>
+            <div class="settings-button-container">
+                <button id="saveSettingsButton" class="save-settings-button">Save Decrees</button>
+                 <button id="cancelSettingsButton" class="cancel-btn">Cancel</button>
+            </div>
         </div>
     </div>
 
     <div id="messageBox" class="message-box"></div>
 
     <script>
-        // Pomodoro Timer Variables
-        let WORK_TIME = 25 * 60; // 25 minutes in seconds
-        let SHORT_BREAK_TIME = 5 * 60; // 5 minutes in seconds
-        let LONG_BREAK_TIME = 15 * 60; // 15 minutes in seconds
-        let timerInterval; // To store the interval ID
-        let currentTime = WORK_TIME; // Current time left in seconds
-        let isPaused = true; // Timer starts paused
-        let currentMode = 'work'; // Can be 'work', 'shortBreak', or 'longBreak'
-        let workSessionsCompleted = 0; // Counter for work sessions to trigger long breaks
+        // --- THEME DEFINITIONS ---
+        const themes = {
+            gryffindor: { // Default
+                '--theme-bg': 'var(--gryffindor-bg)',
+                '--theme-text': 'var(--gryffindor-text)',
+                '--theme-primary': 'var(--gryffindor-primary)',
+                '--theme-accent': 'var(--gryffindor-accent)',
+                '--theme-secondary': 'var(--gryffindor-secondary)',
+                '--theme-container-bg': 'var(--gryffindor-container-bg)'
+            },
+            slytherin: {
+                '--theme-bg': 'var(--slytherin-bg)',
+                '--theme-text': 'var(--slytherin-text)',
+                '--theme-primary': 'var(--slytherin-primary)',
+                '--theme-accent': 'var(--slytherin-accent)',
+                '--theme-secondary': 'var(--slytherin-secondary)',
+                '--theme-container-bg': 'var(--slytherin-container-bg)'
+            },
+            hufflepuff: {
+                '--theme-bg': 'var(--hufflepuff-bg)',
+                '--theme-text': 'var(--hufflepuff-text)',
+                '--theme-primary': 'var(--hufflepuff-primary)',
+                '--theme-accent': 'var(--hufflepuff-accent)',
+                '--theme-secondary': 'var(--hufflepuff-secondary)',
+                '--theme-container-bg': 'var(--hufflepuff-container-bg)'
+            },
+            ravenclaw: {
+                '--theme-bg': 'var(--ravenclaw-bg)',
+                '--theme-text': 'var(--ravenclaw-text)',
+                '--theme-primary': 'var(--ravenclaw-primary)',
+                '--theme-accent': 'var(--ravenclaw-accent)',
+                '--theme-secondary': 'var(--ravenclaw-secondary)',
+                '--theme-container-bg': 'var(--ravenclaw-container-bg)'
+            }
+        };
 
-        // DOM Elements
+        // --- DEFAULT VALUES ---
+        let DEFAULT_WORK_TIME = 25;
+        let DEFAULT_SHORT_BREAK_TIME = 5;
+        let DEFAULT_LONG_BREAK_TIME = 15;
+        let DEFAULT_CYCLE_GOAL = 4;
+        let DEFAULT_AUTO_START_TIMERS = false;
+        let DEFAULT_LONG_BREAK_INTERVAL = 4;
+
+        // --- CURRENT TIMER SETTINGS ---
+        let WORK_TIME = DEFAULT_WORK_TIME * 60;
+        let SHORT_BREAK_TIME = DEFAULT_SHORT_BREAK_TIME * 60;
+        let LONG_BREAK_TIME = DEFAULT_LONG_BREAK_TIME * 60;
+        let cycleGoal = DEFAULT_CYCLE_GOAL;
+        let autoStartTimers = DEFAULT_AUTO_START_TIMERS;
+        let longBreakInterval = DEFAULT_LONG_BREAK_INTERVAL;
+
+        // --- TIMER STATE ---
+        let timerInterval;
+        let currentTime = WORK_TIME;
+        let initialTime = WORK_TIME;
+        let isPaused = true;
+        let currentMode = 'work';
+        let workSessionsCompletedToday = 0;
+
+        // --- OWL PET ---
+        let owlEnergy = 100;
+        let treatCount = 0;
+
+        // --- STATISTICS ---
+        let totalWorkSessionsAllTime = 0;
+        let totalWorkMinutesAllTime = 0;
+        // tasksCompletedAllTime will be derived from tasks.filter(t => t.completed).length
+        let currentDayStreak = 0;
+        let lastSessionDate = null;
+
+        // --- DOM ELEMENTS ---
         const timerDisplay = document.getElementById('timerDisplay');
-        const timerStatus = document.getElementById('timerStatus');
+        const timerStatusText = document.getElementById('timerStatusText');
+        const cycleCountDisplay = document.getElementById('cycleCountDisplay');
         const startButton = document.getElementById('startButton');
         const pauseButton = document.getElementById('pauseButton');
-        const resetButton = document.getElementById('resetButton');
-
-        // Owl Pet Variables
-        let owlEnergy = 100; // Max 100
-        let treatCount = 0;
-        const owlStatusText = document.getElementById('owlStatusText');
+        const resetDayButton = document.getElementById('resetDayButton');
+        const openSettingsModalButton = document.getElementById('openSettingsModalButton');
+        const progressRingCircle = document.getElementById('progressRingCircle');
+        const radius = progressRingCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+        progressRingCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        
+        const workModeBtn = document.getElementById('workModeBtn');
+        const shortBreakModeBtn = document.getElementById('shortBreakModeBtn');
+        const longBreakModeBtn = document.getElementById('longBreakModeBtn');
+        const owlStatusTextEl = document.getElementById('owlStatusText');
         const owlEnergyBar = document.getElementById('owlEnergyBar');
         const feedOwlButton = document.getElementById('feedOwlButton');
-        const treatCountDisplay = document.getElementById('treatCount');
-        const pixelOwlElement = document.getElementById('pixelOwl'); // The main owl element
+        const treatCountDisplayEl = document.getElementById('treatCountDisplay');
+        const pixelOwlElement = document.getElementById('pixelOwl');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettingsModalBtn = document.getElementById('closeSettingsModalBtn');
+        const workTimeInput = document.getElementById('workTimeInput');
+        const shortBreakTimeInput = document.getElementById('shortBreakTimeInput');
+        const longBreakTimeInput = document.getElementById('longBreakTimeInput');
+        const cycleGoalInput = document.getElementById('cycleGoalInput');
+        const longBreakIntervalInput = document.getElementById('longBreakIntervalInput');
+        const autoStartTimersInput = document.getElementById('autoStartTimersInput');
+        const saveSettingsButton = document.getElementById('saveSettingsButton');
+        const cancelSettingsButton = document.getElementById('cancelSettingsButton');
+        const soundToggleCheckbox = document.getElementById('soundToggleCheckbox');
+        const soundStatusLabel = document.getElementById('soundStatusLabel');
+        let soundsMuted = !soundToggleCheckbox.checked;
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const tasksListUL = document.getElementById('tasksList');
+        const currentTaskDisplay = document.getElementById('currentTaskDisplay');
+        let tasks = [];
+        let currentTaskId = null;
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const statTotalWorkSessions = document.getElementById('statTotalWorkSessions');
+        const statTotalWorkMinutes = document.getElementById('statTotalWorkMinutes');
+        const statTasksCompleted = document.getElementById('statTasksCompleted');
+        const statCurrentStreak = document.getElementById('statCurrentStreak');
         const messageBox = document.getElementById('messageBox');
+        let workEndSynth, breakEndSynth, feedSynth, taskSynth, genericClickSynth;
 
-        // Tone.js Synths (will be initialized on first user interaction to enable audio context)
-        let workEndSynth, breakEndSynth, feedSynth;
-        let soundsMuted = false; // Variable to control sound muting
-
-        // --- Sound Initialization ---
-        // This function initializes the synthesizers for sound effects.
-        // It's called once, typically after the first user interaction that should produce sound.
+        // --- SOUND INITIALIZATION & PLAY ---
         function initializeSounds() {
-            if (workEndSynth) return; // Avoid re-initializing if already done
-
-            // Synthesizer for when a work session ends
-            workEndSynth = new Tone.Synth({
-                oscillator: { type: "triangle" },
-                envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.5 }
-            }).toDestination();
-            // Add a reverb effect to the work end sound for a fuller feel
-            const workReverb = new Tone.Reverb(1).toDestination(); // 1 second reverb time
-            workEndSynth.connect(workReverb);
-
-            // Synthesizer for when a break session ends
-            breakEndSynth = new Tone.Synth({
-                oscillator: { type: "sine" }, // Sine wave for a softer tone
-                envelope: { attack: 0.02, decay: 0.3, sustain: 0.2, release: 0.6 }
-            }).toDestination();
-            const breakReverb = new Tone.Reverb(1.5).toDestination(); // Slightly longer reverb for breaks
-            breakEndSynth.connect(breakReverb);
-
-            // Synthesizer for the owl feeding sound
-            feedSynth = new Tone.PluckSynth({ // PluckSynth for a "plucky" or "twangy" sound
-                attackNoise: 0.5,    // Amount of noise in the attack
-                dampening: 3000,     // How quickly the sound fades (higher is faster)
-                resonance: 0.7       // Resonance of the sound
-            }).toDestination();
-            const feedReverb = new Tone.Reverb(0.5).toDestination(); // Shorter reverb for feed sound
-            feedSynth.connect(feedReverb);
+            if (genericClickSynth) return; // Already initialized
+            try {
+                if (Tone.context.state !== 'running') { // Ensure Tone.js is allowed to start
+                    Tone.start(); 
+                }
+                workEndSynth = new Tone.Synth({ oscillator: { type: "triangle" }, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.5 } }).toDestination();
+                workEndSynth.connect(new Tone.Reverb(0.8).toDestination());
+                breakEndSynth = new Tone.Synth({ oscillator: { type: "sine" }, envelope: { attack: 0.02, decay: 0.3, sustain: 0.2, release: 0.6 } }).toDestination();
+                breakEndSynth.connect(new Tone.Reverb(1).toDestination());
+                feedSynth = new Tone.PluckSynth({ attackNoise: 0.5, dampening: 3000, resonance: 0.7 }).toDestination();
+                feedSynth.connect(new Tone.Reverb(0.3).toDestination());
+                taskSynth = new Tone.MembraneSynth({ pitchDecay: 0.01, octaves: 3, envelope: { attack: 0.001, decay: 0.2, sustain: 0 } }).toDestination();
+                taskSynth.connect(new Tone.FeedbackDelay("16n", 0.2).toDestination());
+                genericClickSynth = new Tone.MembraneSynth({ pitchDecay: 0.008, octaves: 4, envelope: { attack: 0.001, decay: 0.1, sustain: 0 } }).toDestination();
+            } catch (error) { console.error("Error initializing Tone.js synths:", error); showMessage("Could not initialize sounds.", 3000); }
         }
 
-        // --- Play Sound Utility ---
-        // A helper function to play a sound from a given synth.
-        // Checks if sounds are muted and if the audio context is running.
-        function playSound(synth, note, duration) {
+        function playSound(synth, note, duration, timeOffset = 0) {
             if (!soundsMuted && synth && Tone.context.state === 'running') {
-                synth.triggerAttackRelease(note, duration, Tone.now()); // Play the note for the given duration
+                try { synth.triggerAttackRelease(note, duration, Tone.now() + timeOffset); }
+                catch (error) { console.error("Error playing sound:", error); }
             }
         }
+        
+        // --- THEME SWITCHER ---
+        function applyTheme(themeName) {
+            const selectedThemeConfig = themes[themeName] || themes.gryffindor;
+            const body = document.body;
+            
+            // Iterate over the theme config and set CSS variables on the body
+            for (const cssVarName in selectedThemeConfig) {
+                if (Object.hasOwnProperty.call(selectedThemeConfig, cssVarName)) {
+                    // cssVarName is like '--theme-bg'
+                    // selectedThemeConfig[cssVarName] is like 'var(--gryffindor-bg)'
+                    body.style.setProperty(cssVarName, selectedThemeConfig[cssVarName]);
+                }
+            }
+            
+            body.dataset.activeTheme = themeName; // For CSS rules that use data-attribute selectors
 
-        // --- Utility Functions ---
-        // Formats seconds into a MM:SS string.
+            // Update active class on theme buttons
+            themeButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === themeName);
+            });
+            localStorage.setItem('pomodoroTheme', themeName);
+            playSound(genericClickSynth, "C4", "16n");
+        }
+
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('pomodoroTheme') || 'gryffindor'; // Default to gryffindor
+            applyTheme(savedTheme);
+        }
+
+        // --- UTILITIES ---
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const remainingSeconds = seconds % 60;
-            // Pad with leading zeros if needed
             return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
         }
 
-        // Displays a message in the message box for a set duration.
         function showMessage(message, duration = 3000) {
             messageBox.textContent = message;
-            messageBox.classList.add('show'); // CSS class to make it visible
-            // Hide the message box after the specified duration
-            setTimeout(() => {
-                messageBox.classList.remove('show');
-            }, duration);
+            messageBox.classList.add('show');
+            setTimeout(() => messageBox.classList.remove('show'), duration);
         }
 
-        // --- Owl Functions ---
-        // Updates the owl's status text, energy bar, and visual transformations.
-        function updateOwlStatus() {
-            owlEnergyBar.style.width = owlEnergy + '%'; // Set energy bar width
-            // Change owl's appearance and status message based on energy level
+        function setProgress(percent) {
+            const clampedPercent = Math.max(0, Math.min(100, percent));
+            const offset = circumference - (clampedPercent / 100) * circumference;
+            progressRingCircle.style.strokeDashoffset = offset;
+        }
+
+
+        // --- OWL FUNCTIONS ---
+        function updateOwlVisuals() {
+            owlEnergyBar.style.width = owlEnergy + '%';
             if (owlEnergy > 70) {
-                owlStatusText.textContent = "Hedwig is hooting happily!";
-                pixelOwlElement.style.transform = 'scale(1)'; // Normal size
+                owlStatusTextEl.textContent = "Hedwig is hooting happily!";
+                pixelOwlElement.style.transform = 'scale(1)'; pixelOwlElement.style.filter = 'none';
             } else if (owlEnergy > 30) {
-                owlStatusText.textContent = "Hedwig looks a bit peckish.";
-                pixelOwlElement.style.transform = 'scale(0.95)'; // Slightly smaller
+                owlStatusTextEl.textContent = "Hedwig looks a bit peckish.";
+                pixelOwlElement.style.transform = 'scale(0.95)'; pixelOwlElement.style.filter = 'saturate(0.8)';
             } else if (owlEnergy > 0) {
-                owlStatusText.textContent = "Hedwig seems tired and hungry...";
-                pixelOwlElement.style.transform = 'scale(0.9) rotate(-3deg)'; // Smaller and tilted
-            } else { // Owl energy is 0
-                owlStatusText.textContent = "Oh no! Hedwig has flown off to find food!";
-                pixelOwlElement.style.transform = 'scale(0.8) rotate(-10deg) translateY(10px)'; // Even smaller, tilted, and moved
+                owlStatusTextEl.textContent = "Hedwig seems tired and hungry...";
+                pixelOwlElement.style.transform = 'scale(0.9) rotate(-3deg)'; pixelOwlElement.style.filter = 'saturate(0.6) brightness(0.9)';
+            } else {
+                owlStatusTextEl.textContent = "Oh no! Hedwig has flown off to find food!";
+                pixelOwlElement.style.transform = 'scale(0.8) rotate(-10deg) translateY(10px)'; pixelOwlElement.style.filter = 'grayscale(1) opacity(0.7)';
             }
-            // Enable/disable feed button based on treat count and owl energy
             feedOwlButton.disabled = treatCount === 0 || owlEnergy >= 100;
+            treatCountDisplayEl.textContent = treatCount;
         }
 
-        // Handles feeding the owl.
         function feedOwl() {
-            if (treatCount > 0 && owlEnergy < 100) { // Can only feed if has treats and owl not full energy
+            if (treatCount > 0 && owlEnergy < 100) {
                 treatCount--;
-                owlEnergy = Math.min(100, owlEnergy + 25); // Increase energy by 25, max 100
-                treatCountDisplay.textContent = treatCount; // Update treat display
-                updateOwlStatus(); // Update owl's visual status
-                playSound(feedSynth, "C5", "8n"); // Play feeding sound
-                showMessage("Hedwig enjoyed the treat!", 2000); // Show confirmation message
+                owlEnergy = Math.min(100, owlEnergy + 35);
+                updateOwlVisuals(); playSound(feedSynth, "C5", "8n");
+                showMessage("Hedwig enjoyed the treat! Hoot!", 2000);
+                pixelOwlElement.style.animation = 'wiggle 0.5s ease-in-out';
+                setTimeout(() => pixelOwlElement.style.animation = '', 500);
             }
         }
 
-        // Decreases owl's energy during work sessions.
         function decreaseOwlEnergy() {
-            // Energy only decreases during 'work' mode, if timer is running, and owl has energy
             if (currentMode === 'work' && !isPaused && owlEnergy > 0) {
-                owlEnergy = Math.max(0, owlEnergy - 0.5); // Decrease energy, minimum 0
-                updateOwlStatus(); // Update owl's visual status
+                owlEnergy = Math.max(0, owlEnergy - 0.15); updateOwlVisuals();
             }
         }
 
-        // --- Timer Functions ---
-        // Updates the timer display on the page.
-        function updateDisplay() {
+        // --- TIMER CORE FUNCTIONS ---
+        function updateTimerDisplayAndTitle() {
             timerDisplay.textContent = formatTime(currentTime);
+            const currentTaskObj = tasks.find(task => task.id === currentTaskId);
+            const taskTextForTitle = currentTaskObj ? `: ${currentTaskObj.text}` : "";
+            const modeText = currentMode === 'work' ? "Study" : (currentMode === 'shortBreak' ? "Short Break" : "Long Break");
+
+            if (!isPaused) {
+                document.title = `${formatTime(currentTime)} - ${modeText}${taskTextForTitle} | Owl Pomodoro`;
+            } else { document.title = "Magical Owl Pomodoro Timer"; }
+            cycleCountDisplay.textContent = `Cycles: ${workSessionsCompletedToday} / ${cycleGoal}`;
+            
+            const progressPercent = initialTime > 0 ? ((initialTime - currentTime) / initialTime * 100) : 0;
+            setProgress(progressPercent);
+        }
+        
+        function setActiveModeButton(mode) {
+            [workModeBtn, shortBreakModeBtn, longBreakModeBtn].forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
         }
 
-        // Starts or resumes the timer.
-        function startTimer() {
-            if (isPaused) { // Only start if paused
-                isPaused = false;
-                // Update button states
-                startButton.disabled = true;
-                pauseButton.disabled = false;
-                // Set status message based on current mode
-                timerStatus.textContent = currentMode === 'work' ? "Focus Time!" : (currentMode === 'shortBreak' ? "Short Break!" : "Long Break!");
+        function switchMode(newMode, keepSessions = false, fromSettingsSave = false) {
+            clearInterval(timerInterval);
+            isPaused = true;
+            currentMode = newMode;
+            setActiveModeButton(newMode);
 
-                // Set up the interval to decrease time every second
+            switch (newMode) {
+                case 'work': currentTime = WORK_TIME; timerStatusText.textContent = "Ready for some Charms practice?"; startButton.textContent = "Begin Study"; break;
+                case 'shortBreak': currentTime = SHORT_BREAK_TIME; timerStatusText.textContent = "Time for a quick trip to Honeydukes!"; startButton.textContent = "Start Break"; break;
+                case 'longBreak': currentTime = LONG_BREAK_TIME; timerStatusText.textContent = "Time for a visit to the Common Room!"; startButton.textContent = "Start Break"; break;
+            }
+            initialTime = currentTime; // Reset initialTime for progress circle calculation
+            updateTimerDisplayAndTitle();
+            startButton.disabled = currentTime <= 0; // Disable start if duration is 0
+            pauseButton.disabled = true;
+            if (!fromSettingsSave) updateOwlVisuals();
+        }
+
+        function startTimer() {
+            if (isPaused && currentTime > 0) {
+                if (currentMode === 'work' && !currentTaskId && tasks.some(t => !t.completed)) {
+                    const firstUncompletedTask = tasks.find(t => !t.completed);
+                    if (firstUncompletedTask) {
+                        if (!confirm(`No specific assignment active. Focus on "${firstUncompletedTask.text}"?`)) {
+                            showMessage("Select an assignment or add a new one.", 3000); return;
+                        }
+                        setCurrentTask(firstUncompletedTask.id);
+                    } else if (tasks.length > 0 && tasks.every(t => t.completed)) {
+                         showMessage("All assignments done! Add a new one.", 3000); return;
+                    } else if (tasks.length === 0) {
+                        showMessage("Add an assignment before you begin studying!", 3000); return;
+                    }
+                }
+
+                isPaused = false; startButton.disabled = true; pauseButton.disabled = false;
+                const modeText = currentMode === 'work' ? "Study" : (currentMode === 'shortBreak' ? "Short Break" : "Long Break");
+                timerStatusText.textContent = `${modeText} in progress...`;
+                if (initialTime <= 0 || currentTime === initialTime) { // If timer was reset or just starting
+                     initialTime = currentTime; 
+                }
+                
+                updateTimerDisplayAndTitle();
+
                 timerInterval = setInterval(() => {
                     currentTime--;
-                    updateDisplay();
-                    decreaseOwlEnergy(); // Owl energy decreases during work
-
-                    // When timer reaches zero
-                    if (currentTime < 0) {
-                        clearInterval(timerInterval); // Stop the interval
-                        handleSessionEnd(); // Handle the end of the session
+                    updateTimerDisplayAndTitle();
+                    decreaseOwlEnergy();
+                    if (currentMode === 'work') {
+                        totalWorkMinutesAllTime++; // Increment total focused minutes
+                        if (currentTime === 0) { // Work session just ended
+                           handleNewDaySession(); // Check for new day and update streak
+                        }
                     }
-                }, 1000); // 1000 milliseconds = 1 second
-            }
+                    if (currentTime < 0) { clearInterval(timerInterval); handleSessionEnd(); }
+                }, 1000);
+            } else if (currentTime <= 0) { showMessage("Set a duration greater than 0 to start.", 2500); }
         }
 
-        // Pauses the timer.
         function pauseTimer() {
-            isPaused = true;
-            clearInterval(timerInterval); // Stop the interval
-            // Update button states
-            startButton.disabled = false;
-            startButton.textContent = "Resume"; // Change start button text to "Resume"
-            pauseButton.disabled = true;
+            isPaused = true; clearInterval(timerInterval);
+            startButton.disabled = false; startButton.textContent = "Resume"; pauseButton.disabled = true;
+            updateTimerDisplayAndTitle();
+        }
+        
+        function fullDayReset() {
+            if (!confirm("Reset daily progress? This will reset today's cycle count and current assignment.")) return;
+            workSessionsCompletedToday = 0; currentTaskId = null;
+            switchMode('work', false); renderTasks(); updateStatisticsDisplay();
+            showMessage("Daily progress reset. Ready for new assignments!", 2000);
+            playSound(genericClickSynth, "A3", "8n");
         }
 
-        // Resets the timer to the specified mode (default is 'work').
-        function resetTimer(mode = 'work') {
-            clearInterval(timerInterval); // Stop any active interval
-            isPaused = true;
-            currentMode = mode;
-
-            // Set current time and status message based on the mode
-            switch (mode) {
-                case 'work':
-                    currentTime = WORK_TIME;
-                    timerStatus.textContent = "Ready to focus?";
-                    break;
-                case 'shortBreak':
-                    currentTime = SHORT_BREAK_TIME;
-                    timerStatus.textContent = "Time for a short break!";
-                    break;
-                case 'longBreak':
-                    currentTime = LONG_BREAK_TIME;
-                    timerStatus.textContent = "Time for a long break!";
-                    break;
-            }
-            updateDisplay(); // Update timer display
-            // Reset button states
-            startButton.disabled = false;
-            startButton.textContent = "Start Work"; // Reset start button text
-            pauseButton.disabled = true;
-            updateOwlStatus(); // Update owl status as energy might be reset or mode changed
-        }
-
-        // Handles the logic when a Pomodoro session (work or break) ends.
         function handleSessionEnd() {
-            if (currentMode === 'work') {
-                workSessionsCompleted++;
-                treatCount++; // Award a treat for completing a work session
-                treatCountDisplay.textContent = treatCount;
-                feedOwlButton.disabled = treatCount === 0 || owlEnergy >= 100; // Update feed button state
-                showMessage("Pomodoro complete! You earned an owl treat! 🦉", 3000);
-                playSound(workEndSynth, "G4", "4n"); // Play work session end sound
+            let previousMode = currentMode;
+            playSound(previousMode === 'work' ? workEndSynth : breakEndSynth, previousMode === 'work' ? "G4" : "C4", "2n");
 
-                // After 4 work sessions, start a long break, otherwise a short break
-                if (workSessionsCompleted % 4 === 0) {
-                    resetTimer('longBreak');
-                } else {
-                    resetTimer('shortBreak');
+            if (previousMode === 'work') {
+                workSessionsCompletedToday++; totalWorkSessionsAllTime++; treatCount++;
+                updateOwlVisuals();
+                showMessage("Study session complete! You earned an Owl Post Treat! 🦉", 3000);
+                if (workSessionsCompletedToday >= cycleGoal) {
+                    showMessage(`Daily goal of ${cycleGoal} sessions reached! Well done, Prefect! 🎉`, 4000);
+                    playSound(workEndSynth, "C5", "1n", 0.5);
                 }
-            } else { // Break ended
-                showMessage(currentMode === 'shortBreak' ? "Break's over! Back to work." : "Long break finished! Ready for more?", 3000);
-                playSound(breakEndSynth, "C4", "4n"); // Play break session end sound
-                resetTimer('work'); // Switch back to work mode
+                // Streak is handled by handleNewDaySession called in startTimer when currentTime hits 0
+            
+                if (workSessionsCompletedToday > 0 && workSessionsCompletedToday % longBreakInterval === 0 && LONG_BREAK_TIME > 0) {
+                    switchMode('longBreak', true);
+                } else if (SHORT_BREAK_TIME > 0) {
+                    switchMode('shortBreak', true);
+                } else {
+                    if (workSessionsCompletedToday < cycleGoal) switchMode('work', true);
+                    else { timerStatusText.textContent = "Daily goal reached! Time for the House Cup party!"; isPaused = true; startButton.disabled = true;}
+                }
+            } else {
+                showMessage(`${previousMode === 'shortBreak' ? "Short break" : "Long break"} over! Back to your studies.`, 3000);
+                switchMode('work', true);
             }
-            // Update start button text for the new mode
-            startButton.textContent = currentMode === 'work' ? "Start Work" : "Start Break";
+            updateStatisticsDisplay(); saveStatistics();
+            if (autoStartTimers && currentTime > 0) { setTimeout(() => { if (isPaused) startTimer(); }, 1500); }
+            else if (currentTime <= 0 && autoStartTimers) { showMessage("Next session has 0 duration. Timer not auto-starting.", 3000); }
         }
 
-        // --- Event Listeners ---
-        // Event listener for the start button
-        startButton.addEventListener('click', async () => {
-            await Tone.start(); // Ensure Tone.js audio context is started by user gesture
-            initializeSounds(); // Initialize sounds if not already done
-            startTimer();
-        });
-        // Event listener for the pause button
-        pauseButton.addEventListener('click', pauseTimer);
-        // Event listener for the reset button (resets to work mode)
-        resetButton.addEventListener('click', () => resetTimer('work'));
-        // Event listener for the feed owl button
-        feedOwlButton.addEventListener('click', feedOwl);
+        // --- SETTINGS FUNCTIONS ---
+        function openSettings() {
+            workTimeInput.value = WORK_TIME / 60; shortBreakTimeInput.value = SHORT_BREAK_TIME / 60;
+            longBreakTimeInput.value = LONG_BREAK_TIME / 60; cycleGoalInput.value = cycleGoal;
+            longBreakIntervalInput.value = longBreakInterval; autoStartTimersInput.checked = autoStartTimers;
+            settingsModal.style.display = 'flex'; playSound(genericClickSynth, "E4", "16n");
+        }
 
-        // --- Initial Setup ---
-        // Set the initial timer display and owl status when the page loads
-        updateDisplay();
-        updateOwlStatus();
+        function closeSettings() { settingsModal.style.display = 'none'; playSound(genericClickSynth, "C4", "16n"); }
+
+        function saveSettings() {
+            const newWorkTime = parseInt(workTimeInput.value); const newShortBreakTime = parseInt(shortBreakTimeInput.value);
+            const newLongBreakTime = parseInt(longBreakTimeInput.value); const newCycleGoal = parseInt(cycleGoalInput.value);
+            const newLongBreakInterval = parseInt(longBreakIntervalInput.value);
+
+            if (isNaN(newWorkTime) || newWorkTime <= 0 || isNaN(newShortBreakTime) || newShortBreakTime < 0 ||
+                isNaN(newLongBreakTime) || newLongBreakTime < 0 || isNaN(newCycleGoal) || newCycleGoal <= 0 ||
+                isNaN(newLongBreakInterval) || newLongBreakInterval <=0 ) {
+                showMessage("Enter valid numbers (durations > 0, breaks >= 0, goal/interval > 0).", 3000); return;
+            }
+            WORK_TIME = newWorkTime * 60; SHORT_BREAK_TIME = newShortBreakTime * 60; LONG_BREAK_TIME = newLongBreakTime * 60;
+            cycleGoal = newCycleGoal; longBreakInterval = newLongBreakInterval; autoStartTimers = autoStartTimersInput.checked;
+            localStorage.setItem('pomodoroSettings', JSON.stringify({
+                work: newWorkTime, shortBreak: newShortBreakTime, longBreak: newLongBreakTime,
+                goal: newCycleGoal, autoStart: autoStartTimers, longInterval: newLongBreakInterval
+            }));
+            showMessage("Decrees saved!", 2000); closeSettings();
+            let currentlyRunning = !isPaused; if (currentlyRunning) pauseTimer();
+            switchMode(currentMode, true, true); // keepSessions=true, fromSettingsSave=true
+            if (currentlyRunning && currentTime > 0) startButton.textContent = "Resume";
+            else if (currentTime <= 0) switchMode(currentMode, true); // If time became 0, reset mode properly
+            updateOwlVisuals(); playSound(genericClickSynth, "G4", "8n");
+        }
+
+        function loadAllSettings() {
+            const saved = localStorage.getItem('pomodoroSettings');
+            if (saved) {
+                try {
+                    const s = JSON.parse(saved);
+                    WORK_TIME = (s.work || DEFAULT_WORK_TIME) * 60;
+                    SHORT_BREAK_TIME = (s.shortBreak !== undefined ? s.shortBreak : DEFAULT_SHORT_BREAK_TIME) * 60;
+                    LONG_BREAK_TIME = (s.longBreak !== undefined ? s.longBreak : DEFAULT_LONG_BREAK_TIME) * 60;
+                    cycleGoal = s.goal || DEFAULT_CYCLE_GOAL;
+                    autoStartTimers = s.autoStart !== undefined ? s.autoStart : DEFAULT_AUTO_START_TIMERS;
+                    longBreakInterval = s.longInterval || DEFAULT_LONG_BREAK_INTERVAL;
+                } catch(e) { console.error("Error parsing saved settings:", e); }
+            }
+            switchMode(currentMode, false); // Initial setup based on loaded/default times
+        }
+
+        // --- SOUND TOGGLE ---
+        function handleSoundToggle() {
+            soundsMuted = !soundToggleCheckbox.checked;
+            soundStatusLabel.textContent = soundToggleCheckbox.checked ? "Sounds On 🔊" : "Sounds Off 🔇";
+            localStorage.setItem('pomodoroSoundMuted', soundsMuted.toString());
+            if (!soundsMuted) { initializeSounds(); playSound(genericClickSynth, "E4", "16n"); }
+        }
+
+        function loadSoundPreference() {
+            const savedMuteState = localStorage.getItem('pomodoroSoundMuted');
+            soundsMuted = savedMuteState !== null ? JSON.parse(savedMuteState) : false;
+            soundToggleCheckbox.checked = !soundsMuted;
+            soundStatusLabel.textContent = !soundsMuted ? "Sounds On 🔊" : "Sounds Off 🔇";
+        }
+        
+        // --- TASK LIST FUNCTIONS ---
+        function loadTasksFromStorage() {
+            tasks = JSON.parse(localStorage.getItem('pomodoroTasks')) || [];
+            currentTaskId = parseInt(localStorage.getItem('pomodoroCurrentTaskId')) || null;
+            const taskExists = tasks.some(task => task.id === currentTaskId && !task.completed);
+            if (!taskExists) { currentTaskId = null; localStorage.removeItem('pomodoroCurrentTaskId'); }
+            renderTasks();
+        }
+
+        function saveTasksToStorage() {
+            localStorage.setItem('pomodoroTasks', JSON.stringify(tasks));
+            if (currentTaskId !== null) localStorage.setItem('pomodoroCurrentTaskId', currentTaskId.toString());
+            else localStorage.removeItem('pomodoroCurrentTaskId');
+        }
+
+        function addNewTask() {
+            const text = taskInput.value.trim();
+            if (text === "") { showMessage("Assignment cannot be empty!", 2000); return; }
+            const newTask = { id: Date.now(), text: text, completed: false };
+            tasks.unshift(newTask); taskInput.value = "";
+            playSound(taskSynth, "C3", "8n"); renderTasks();
+            if (!currentTaskId) setCurrentTask(newTask.id);
+            saveTasksToStorage();
+        }
+
+        function renderTasks() {
+            tasksListUL.innerHTML = "";
+            let activeTaskText = "No assignment selected.";
+            if (tasks.length === 0) currentTaskDisplay.textContent = "Add an assignment to begin your studies!";
+
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.className = task.completed ? 'completed' : '';
+                if (task.id === currentTaskId) { li.classList.add('active-task'); activeTaskText = `Current Assignment: ${task.text}`; }
+                const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'task-checkbox';
+                checkbox.checked = task.completed; checkbox.addEventListener('change', () => toggleTaskComplete(task.id));
+                li.appendChild(checkbox);
+                const taskTextSpan = document.createElement('span'); taskTextSpan.className = 'task-text';
+                if(task.completed) taskTextSpan.classList.add('completed');
+                taskTextSpan.textContent = task.text; taskTextSpan.title = "Click to make this your current assignment";
+                taskTextSpan.addEventListener('click', () => { if (!task.completed) setCurrentTask(task.id); });
+                li.appendChild(taskTextSpan);
+                const deleteButton = document.createElement('button'); deleteButton.innerHTML = "&#x1F5D1;"; // Trash icon
+                deleteButton.className = 'task-delete'; deleteButton.title = "Delete assignment";
+                deleteButton.addEventListener('click', () => deleteTask(task.id));
+                li.appendChild(deleteButton); tasksListUL.appendChild(li);
+            });
+            
+            if (currentTaskId !== null) {
+                const cTask = tasks.find(t => t.id === currentTaskId);
+                if (cTask) activeTaskText = `Current Assignment: ${cTask.text}`; else activeTaskText = "Select an assignment.";
+            } else if (tasks.some(t => !t.completed)) { activeTaskText = "Select an assignment to begin."; }
+            else if (tasks.length > 0 && tasks.every(t => t.completed)) { activeTaskText = "All assignments done! Add more?"; }
+            currentTaskDisplay.textContent = activeTaskText;
+            updateTimerDisplayAndTitle(); updateStatisticsDisplay(); saveTasksToStorage(); 
+        }
+
+        function setCurrentTask(taskId) {
+            const taskToSet = tasks.find(task => task.id === taskId);
+            if (taskToSet && taskToSet.completed) { showMessage("Cannot set a completed assignment as active.", 2000); return; }
+            currentTaskId = taskId;
+            if (taskToSet) showMessage(`Current assignment: ${taskToSet.text}`, 1500);
+            playSound(genericClickSynth, "D4", "16n"); renderTasks();
+        }
+
+        function toggleTaskComplete(taskId) {
+            const taskIndex = tasks.findIndex(task => task.id === taskId);
+            if (taskIndex > -1) {
+                tasks[taskIndex].completed = !tasks[taskIndex].completed;
+                playSound(taskSynth, tasks[taskIndex].completed ? "E4" : "C4", "8n", 0.1);
+                if (tasks[taskIndex].completed && taskId === currentTaskId) {
+                    currentTaskId = null; const nextTask = tasks.find(t => !t.completed);
+                    if (nextTask) setCurrentTask(nextTask.id);
+                } else if (!tasks[taskIndex].completed && currentTaskId === null) { setCurrentTask(taskId); }
+                renderTasks(); saveStatistics();
+            }
+        }
+
+        function deleteTask(taskId) {
+            if (!confirm("Delete this assignment permanently?")) return;
+            tasks = tasks.filter(task => task.id !== taskId);
+            if (taskId === currentTaskId) {
+                currentTaskId = null; const nextTask = tasks.find(t => !t.completed);
+                if (nextTask) setCurrentTask(nextTask.id);
+            }
+            playSound(taskSynth, "A2", "8n"); renderTasks();
+            saveStatistics();
+        }
+
+        // --- STATISTICS FUNCTIONS ---
+        function loadStatistics() {
+            totalWorkSessionsAllTime = parseInt(localStorage.getItem('totalWorkSessionsAllTime')) || 0;
+            totalWorkMinutesAllTime = parseInt(localStorage.getItem('totalWorkMinutesAllTime')) || 0;
+            currentDayStreak = parseInt(localStorage.getItem('currentDayStreak')) || 0;
+            lastSessionDate = localStorage.getItem('lastSessionDate');
+            updateStreakOnLoad(); 
+            updateStatisticsDisplay();
+        }
+
+        function saveStatistics() {
+            localStorage.setItem('totalWorkSessionsAllTime', totalWorkSessionsAllTime.toString());
+            localStorage.setItem('totalWorkMinutesAllTime', totalWorkMinutesAllTime.toString());
+            localStorage.setItem('tasksCompletedAllTime', tasks.filter(t=>t.completed).length.toString());
+            localStorage.setItem('currentDayStreak', currentDayStreak.toString());
+            if(lastSessionDate) localStorage.setItem('lastSessionDate', lastSessionDate);
+        }
+        
+        function updateStreakOnLoad() {
+            const today = new Date().toDateString();
+            if (lastSessionDate && lastSessionDate !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (lastSessionDate !== yesterday.toDateString()) { currentDayStreak = 0; }
+            }
+        }
+        
+        function handleNewDaySession() {
+            const today = new Date().toDateString();
+            if (!lastSessionDate) { currentDayStreak = 1; }
+            else if (lastSessionDate !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (lastSessionDate === yesterday.toDateString()) { currentDayStreak++; }
+                else { currentDayStreak = 1; }
+            }
+            lastSessionDate = today;
+        }
+
+        function updateStatisticsDisplay() {
+            statTotalWorkSessions.textContent = totalWorkSessionsAllTime;
+            statTotalWorkMinutes.textContent = totalWorkMinutesAllTime;
+            statTasksCompleted.textContent = tasks.filter(t => t.completed).length;
+            statCurrentStreak.textContent = currentDayStreak;
+        }
+
+        // --- EVENT LISTENERS ---
+        startButton.addEventListener('click', () => { initializeSounds(); startTimer(); playSound(genericClickSynth, "C4", "16n"); });
+        pauseButton.addEventListener('click', () => { pauseTimer(); playSound(genericClickSynth, "A3", "16n"); });
+        resetDayButton.addEventListener('click', fullDayReset);
+
+        [workModeBtn, shortBreakModeBtn, longBreakModeBtn].forEach(btn => {
+            btn.addEventListener('click', () => { switchMode(btn.dataset.mode); playSound(genericClickSynth, "D4", "16n"); });
+        });
+        
+        openSettingsModalButton.addEventListener('click', openSettings);
+        closeSettingsModalBtn.addEventListener('click', closeSettings);
+        saveSettingsButton.addEventListener('click', saveSettings);
+        cancelSettingsButton.addEventListener('click', closeSettings);
+        settingsModal.addEventListener('click', (event) => { if (event.target === settingsModal) closeSettings(); });
+        soundToggleCheckbox.addEventListener('change', handleSoundToggle);
+        feedOwlButton.addEventListener('click', feedOwl);
+        addTaskBtn.addEventListener('click', addNewTask);
+        taskInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addNewTask(); });
+        themeButtons.forEach(button => button.addEventListener('click', () => applyTheme(button.dataset.theme)));
+
+        // --- INITIAL PAGE LOAD SETUP ---
+        window.addEventListener('load', () => {
+            loadTheme(); loadAllSettings(); loadSoundPreference();
+            loadTasksFromStorage(); loadStatistics(); 
+            updateOwlVisuals(); updateTimerDisplayAndTitle(); setProgress(0);
+            // Delay initialization slightly to ensure DOM is fully ready for Tone.js
+            setTimeout(() => {
+                 document.body.addEventListener('click', initializeSounds, { once: true });
+            }, 100);
+        });
     </script>
 </body>
 </html>
