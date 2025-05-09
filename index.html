@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indrajeet & Ritika’s Shared Universe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <style>
+    /* Shared Magic Styles */
+    :root { /* Define colors for consistency */
+        --parchment: #f5eeda;
+        --dark-brown: #3a2d21;
+        --maroon: #740001;
+        --dark-maroon: #ae0001;
+        --gold: #eeba30;
+        --light-brown: #c8bfa8;
+        --light-parchment: rgba(255,255,249,0.9);
+        --hover-parchment: rgba(255,255,249,0.95);
+    }
+
+    body {
+      font-family: 'Merriweather', serif;
+      background-color: var(--parchment);
+      color: var(--dark-brown);
+      /* Subtle Texture */
+      background-image: url('data:image/svg+xml,%3Csvg width="52" height="26" viewBox="0 0 52 26" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d2c4a8" fill-opacity="0.2"%3E%3Cpath d="M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+      overflow-x: hidden; /* Prevent scroll during curtain animation */
+    }
+    /* Curtains */
+    .curtain {
+        position: fixed;
+        top: 0;
+        height: 100vh;
+        width: 50%;
+        background: linear-gradient(to bottom, #5d0000, var(--maroon), #5d0000); /* Dark Red Velvet */
+        z-index: 100; /* Highest layer */
+        box-shadow: inset -5px 0 15px rgba(0,0,0,0.4), inset 5px 0 15px rgba(0,0,0,0.4);
+        overflow:hidden; /* Hide potential overflow */
+    }
+    .curtain-left {
+        left:0;
+        animation: curtain-open-left 2s ease-out 0.5s forwards; /* Added delay */
+    }
+    .curtain-right {
+        right:0;
+        animation: curtain-open-right 2s ease-out 0.5s forwards; /* Added delay */
+    }
+    @keyframes curtain-open-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); pointer-events: none; } /* Move off screen */
+    }
+    @keyframes curtain-open-right {
+         0% { transform: translateX(0); }
+        100% { transform: translateX(100%); pointer-events: none; } /* Move off screen */
+    }
+    /* Header */
+    .hp-header {
+        font-family: 'Cinzel Decorative', cursive;
+        background: linear-gradient(to right, var(--maroon), var(--dark-maroon));
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        box-shadow: 0 5px 15px rgba(58,45,33,0.4);
+        padding: 1.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        position: relative; /* Needed for z-index */
+        z-index: 1; /* Below curtains */
+        border-radius: 5px; /* Optional rounding */
+    }
+    .hp-header h1 {
+        font-size: 2.5rem; /* Adjust as needed */
+        line-height: 1.1;
+    }
+    .hp-header p {
+        font-family: 'Merriweather', serif; /* Use body font for subtitle */
+        font-size: 1.125rem; /* 18px */
+        margin-top: 0.5rem;
+    }
+    /* Portal Cards */
+    .portal-card {
+        background-color: var(--light-parchment);
+        border: 1px solid var(--light-brown);
+        border-radius: 0.5rem; /* 8px */
+        box-shadow: 0 4px 8px rgba(58,45,33,0.2);
+        transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden; /* Keep sparkles contained */
+        display: flex; /* Use flexbox for layout */
+        flex-direction: column; /* Stack title and text */
+        justify-content: center; /* Center content vertically */
+        align-items: center; /* Center content horizontally */
+        text-align: center;
+        text-decoration: none; /* Remove underline from links */
+        color: var(--dark-brown);
+        min-height: 180px; /* Ensure minimum height */
+    }
+    .portal-card:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 16px rgba(58,45,33,0.3);
+        background-color: var(--hover-parchment);
+    }
+    .hp-title { /* Title within the card */
+        font-family: 'Cinzel Decorative', cursive;
+        color: var(--maroon);
+        margin-bottom: 0.75rem; /* Increased spacing */
+        font-size: 1.5rem; /* Adjusted size */
+        line-height: 1.2;
+        display: flex; /* Align icon and text */
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem; /* Space between icon and text */
+    }
+    .portal-card p { /* Description text */
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-top: 0.5rem; /* Space above description */
+    }
+     /* Icon container */
+     .icon-container {
+         width: 40px; /* Size for SVG */
+         height: 40px;
+         margin-bottom: 0.5rem; /* Space below icon */
+         fill: var(--maroon); /* SVG color */
+         transition: transform 0.3s ease;
+     }
+     .portal-card:hover .icon-container {
+         transform: scale(1.1);
+     }
+
+    /* Sparkle animation */
+    .portal-card::after, .portal-card::before {
+        content:'✨';
+        position:absolute;
+        font-size:1.2rem;
+        color: var(--gold); /* Use gold for sparkles */
+        opacity:0;
+        pointer-events:none;
+        z-index: 5; /* Ensure sparkles are above card content */
+    }
+    .portal-card::after { top:-10px; left:50%; }
+    .portal-card::before { top:-10px; left:40%; transform: rotate(20deg); }
+    .portal-card:hover::after { opacity:1; animation:sparkle1 1s ease-out forwards; }
+    .portal-card:hover::before { opacity:1; animation:sparkle2 1.2s ease-out 0.1s forwards; }
+    @keyframes sparkle1 { 0%{transform:translate(-50%,0) scale(0.5);}50%{transform:translate(-50%,10px) scale(1.2);opacity:1;}100%{transform:translate(-50%,-10px) scale(0.5);opacity:0;} }
+    @keyframes sparkle2 { 0%{transform:translate(-50%,0) rotate(20deg) scale(0.5);}50%{transform:translate(-50%,15px) rotate(20deg) scale(1.1);opacity:0.8;}100%{transform:translate(-50%,-5px) rotate(20deg) scale(0.5);opacity:0;} }
+
+    /* Fade-in main content after curtain */
+    .main-content {
+        opacity:0;
+        animation:fadeIn 1s ease-out forwards;
+        animation-delay:2.5s; /* Delay slightly longer than curtain animation */
+    }
+    @keyframes fadeIn { to { opacity:1; } }
+
+    /* Buttons */
+    .music-button {
+        font-family: 'Cinzel Decorative', cursive;
+        background: var(--gold);
+        color: var(--maroon);
+        border:2px solid var(--maroon);
+        padding:.5rem 1rem;
+        border-radius:5px;
+        cursor:pointer;
+        box-shadow:0 2px 4px rgba(58,45,33,0.3);
+        transition: background-color .3s, color .3s, box-shadow .3s;
+    }
+    .music-button:hover {
+        background: var(--maroon);
+        color: var(--gold);
+        box-shadow: 0 4px 8px rgba(58,45,33,0.5);
+    }
+     .music-button:active {
+         transform: translateY(1px);
+         box-shadow: 0 2px 4px rgba(58, 45, 33, 0.3);
+     }
+  </style>
+</head>
+<body class="bg-gray-100"> <div id="curtainLeft" class="curtain curtain-left"></div>
+  <div id="curtainRight" class="curtain curtain-right"></div>
+
+  <div class="main-content max-w-6xl mx-auto p-4">
+    <header class="hp-header">
+      <h1>Indrajeet & Ritika’s Shared Universe</h1>
+      <p>A space for spellcraft, planning, journaling & life magic</p>
+      <button id="musicToggle" class="music-button mt-4">Play Magical Music 🎵</button>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a class="portal-card" href="meal-plan.html"> <div class="icon-container">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 4h-3.5a.5.5 0 0 0-.5.5V5H9V4.5a.5.5 0 0 0-.5-.5H5a3 3 0 0 0-3 3v9a5 5 0 0 0 10 0v-1h2v1a5 5 0 0 0 10 0v-9a3 3 0 0 0-3-3zM5 6h3v1.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V6h3a1 1 0 0 1 1 1v8.17a3.001 3.001 0 0 1-5.998.176l-.002-.176V15h-2v.17c0 1.41-1.03 2.61-2.41 2.93L8 18.17a3 3 0 0 1-3-2.83V7a1 1 0 0 1 1-1zm7 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+        </div>
+        <h2 class="hp-title">Meal Planner</h2>
+        <p>Plan our weekly magic meals</p>
+      </a>
+      <a class="portal-card" href="#owl-mail">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+         </div>
+        <h2 class="hp-title">Owl Mail</h2>
+        <p>Write or check love notes</p>
+      </a>
+      <a class="portal-card" href="#pensieve">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+         </div>
+        <h2 class="hp-title">The Pensieve</h2>
+        <p>Journals, reflections & memories</p>
+      </a>
+      <a class="portal-card" href="#gift-vault">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3s-3 1.34-3 3c0 .35.07.69.18 1H6c-1.11 0-1.99.89-1.99 2L4 20c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 8h12v12H6V8z"/></svg>
+         </div>
+        <h2 class="hp-title">Gift Vault</h2>
+        <p>Track gifts & wishlists</p>
+      </a>
+      <a class="portal-card" href="#remembrall">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+         </div>
+        <h2 class="hp-title">Remembrall</h2>
+        <p>Our dates & events</p>
+      </a>
+      <a class="portal-card" href="#article-chamber">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+         </div>
+        <h2 class="hp-title">Article Chamber</h2>
+        <p>Write or read drafts</p>
+      </a>
+      <a class="portal-card" href="#room-of-requirement">
+         <div class="icon-container">
+             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 0 1 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.06-2.15 3.98l.01.12z"/></svg>
+         </div>
+        <h2 class="hp-title">Room of Requirement</h2>
+        <p>Tasks & future ideas</p>
+      </a>
+       </div>
+  </div>
+
+  <script>
+    // Curtain removal logic (using pointer-events is smoother than display:none)
+    const curtainLeft = document.getElementById('curtainLeft');
+    const curtainRight = document.getElementById('curtainRight');
+    // Add event listeners to add a class when animation ends
+    curtainLeft.addEventListener('animationend', () => curtainLeft.classList.add('curtain-opened'));
+    curtainRight.addEventListener('animationend', () => curtainRight.classList.add('curtain-opened'));
+
+    // --- Tone.js Music Logic ---
+    let musicPlaying = false;
+    const musicButton = document.getElementById('musicToggle');
+    let backgroundSynth, backgroundSeq, openingChime; // Instruments
+
+    // Function to initialize background music
+    function setupBackgroundMusic() {
+        if (backgroundSynth) return; // Already initialized
+        backgroundSynth = new Tone.FMSynth({
+            harmonicity: 3.1, modulationIndex: 10, detune: 0,
+            oscillator: { type: "sine" },
+            envelope: { attack: 0.01, decay: 0.1, sustain: 0.5, release: 1 },
+            modulation: { type: "square" },
+            modulationEnvelope: { attack: 0.5, decay: 0, sustain: 1, release: 0.5 }
+        }).toDestination();
+        const reverb = new Tone.Reverb(2).toDestination();
+        backgroundSynth.connect(reverb);
+        const melody = [ null, 'B4', null, 'E5', 'G5', null, 'F#5', null, 'E5', null, 'B4', null, 'D5', null, 'C#5', null, null, null, null, null, null, null, null, null ];
+        backgroundSeq = new Tone.Sequence((time, note) => { if (note) { backgroundSynth.triggerAttackRelease(note, "8n", time); } }, melody, "4n");
+        Tone.Transport.bpm.value = 100;
+        backgroundSeq.loop = true;
+    }
+
+    // Function to play opening chime
+    function playOpeningChime() {
+         if (openingChime) return; // Play only once
+         openingChime = new Tone.PluckSynth({ attackNoise: 1, dampening: 4000, resonance: 0.8 }).toDestination();
+         const chimeReverb = new Tone.Reverb(1.5).toDestination();
+         openingChime.connect(chimeReverb);
+         const now = Tone.now();
+         // Play chime slightly after curtain animation starts
+         openingChime.triggerAttackRelease("C5", "8n", now + 0.6);
+         openingChime.triggerAttackRelease("G5", "8n", now + 0.9);
+         openingChime.triggerAttackRelease("E6", "4n", now + 1.3);
+    }
+
+     // Flag to ensure chime plays only once after interaction
+    let hasInteracted = false;
+
+    // Music Button Event Listener
+    musicButton.addEventListener('click', async () => {
+        if (!hasInteracted) {
+            try {
+                await Tone.start(); // Start audio context on first interaction
+                console.log("Audio Context Started");
+                playOpeningChime(); // Play chime on first interaction
+                hasInteracted = true;
+            } catch (e) {
+                 console.error("Error starting Tone.js:", e);
+                 // Handle cases where audio context fails to start
+                 alert("Could not initialize audio. Please try again.");
+                 return;
+            }
+        }
+
+        if (!backgroundSynth) {
+            setupBackgroundMusic(); // Setup music if not already done
+        }
+
+        if (!musicPlaying) {
+            Tone.Transport.start();
+            backgroundSeq.start(0);
+            musicButton.textContent = 'Stop Magical Music 🤫';
+            musicPlaying = true;
+        } else {
+            backgroundSeq.stop();
+            Tone.Transport.stop();
+            musicButton.textContent = 'Play Magical Music 🎵';
+            musicPlaying = false;
+        }
+    });
+
+    // Attempt to play chime on load if context is already active (e.g., navigating back)
+    // This might not always work due to browser restrictions
+    window.addEventListener('load', () => {
+        if (Tone.context.state === 'running') {
+             // Check if interaction already happened in this session
+             if (!hasInteracted) {
+                 playOpeningChime();
+                 hasInteracted = true; // Assume interaction happened if context is running
+             }
+        }
+    });
+
+  </script>
+</body>
+</html>
